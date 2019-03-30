@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Search results for "{{searchQuery}}"</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-grid>
+    <ion-row>
+        <ion-col>
+          <ion-card *ngFor="let artist of artists; let i = index">
+
+              <img src="{{artist.image[4]['#text']}}" onerror="this.src='../../assets/imgs/imgNotFound.png'" height="300" width="300"/>
+
+              <ion-card-content>
+                <ion-card-title>{{artist.name}}</ion-card-title>
+                <p>Listeners: {{commaSeparate(artist.listeners)}}</p>
+                <br/>
+                <button ion-button icon-end block (click)="viewArtist(i)">
+                    View
+                    <ion-icon name="arrow-forward"></ion-icon> 
+                </button>
+              </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>

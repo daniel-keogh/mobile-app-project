@@ -6,25 +6,39 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { SearchResultsPage } from '../pages/search-results/search-results';
+import { ArtistInfoPage } from '../pages/artist-info/artist-info';
+
+import { IonicStorageModule } from '@ionic/storage';
+import { HttpClientModule } from '@angular/common/http';
+
+import { SimilarArtistsProvider } from '../providers/similar-artists/similar-artists';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    SearchResultsPage,
+    ArtistInfoPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpClientModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    SearchResultsPage,
+    ArtistInfoPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    SimilarArtistsProvider
   ]
 })
 export class AppModule {}

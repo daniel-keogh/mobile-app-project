@@ -7,8 +7,31 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-searchbar #userInput
+    (keyup.enter)="viewSearchResults(userInput.value)" 
+    placeholder="Enter an artist to get started.">
+  </ion-searchbar>
+
+  <br/><br/>
+
+  <ion-list>
+      <ion-list-header>Search History:</ion-list-header>
+      
+      <ion-item-sliding *ngFor="let item of searchHistory">
+        <ion-item>
+          <button ion-button clear fill default block (click)="viewSearchResults(item)">{{item}}</button>
+        </ion-item>
+        
+        <ion-item-options side="right">
+          <button ion-button color="danger" (click)="deleteHistoryItem(item)">
+              <ion-icon name="trash"></ion-icon>Delete
+          </button>
+        </ion-item-options>
+        <ion-item-options side="left">
+            <button ion-button color="danger" (click)="deleteHistoryItem(item)">
+                <ion-icon name="trash"></ion-icon>Delete
+            </button>
+          </ion-item-options>
+      </ion-item-sliding>
+  </ion-list>
 </ion-content>
