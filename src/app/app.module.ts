@@ -13,6 +13,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
 
 import { SimilarArtistsProvider } from '../providers/similar-artists/similar-artists';
+import { SearchHistoryProvider } from '../providers/search-history/search-history';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { SimilarArtistsProvider } from '../providers/similar-artists/similar-art
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    SimilarArtistsProvider
+    SimilarArtistsProvider,
+    SearchHistoryProvider
   ]
 })
 export class AppModule {}

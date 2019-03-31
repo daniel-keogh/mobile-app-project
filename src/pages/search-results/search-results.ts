@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ArtistInfoPage } from '../artist-info/artist-info';
 import { SimilarArtistsProvider } from '../../providers/similar-artists/similar-artists'
 import { Storage } from '@ionic/storage';
+import { SearchHistoryProvider } from '../../providers/search-history/search-history';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,7 @@ export class SearchResultsPage {
   searchQuery: string;
   artists: any = [];
 
-  constructor(public navCtrl: NavController, private similarArtistsProvider: SimilarArtistsProvider, public navParams: NavParams, private storage: Storage) {
+  constructor(public navCtrl: NavController, private similarArtistsProvider: SimilarArtistsProvider, public navParams: NavParams, private storage: Storage, private searchHistoryProvider: SearchHistoryProvider) {
     this.searchQuery = navParams.get('userInput');
   }
 
@@ -40,12 +41,12 @@ export class SearchResultsPage {
   }
 
   viewSearchResults(userInput : string) {
-
     if (userInput != "") {
       this.searchQuery = userInput;
       this.ionViewDidLoad();
       
-      // TODO - add the item to seach history
+      // add the item to search history
+      this.searchHistoryProvider.addItemToHistory(userInput);
     }
   }
 }
