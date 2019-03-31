@@ -1,6 +1,10 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Search results for "{{searchQuery}}"</ion-title>
+      <ion-searchbar #userInput
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="viewSearchResults(userInput.value)" 
+        placeholder="Search for another artist...">
+      </ion-searchbar>
   </ion-navbar>
 </ion-header>
 

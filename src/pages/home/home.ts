@@ -15,27 +15,44 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    this.storage.forEach((val, key, i) => {
-      this.searchHistory.add(val);
-    });
+    this.loadSearchHistory();
   }
 
   viewSearchResults(userInput : string) {
-    this.navCtrl.push(SearchResultsPage, {
-      userInput : userInput.trim()
-    });
+    if (userInput != "") {
+      this.navCtrl.push(SearchResultsPage, {
+        userInput : userInput.trim()
+      });
+  
+      this.addItemToHistory(userInput);
+    }
+  }
 
-    this.storage.set("History Item "+ this.searchHistory.size, userInput);
-    this.searchHistory.add(userInput);
+  // add each value of "Search History" to the searchHistory Set
+  loadSearchHistory() {
+    this.storage.get("Search History").then((history) => {
+      if (history != null) 
+        for (let i in history)
+          this.searchHistory.add(history[i]);
+    });
+  }
+
+  addItemToHistory(item: string) {
+    this.searchHistory.add(item);
+    this.storage.set("Search History", Array.from(this.searchHistory)); // convert the Set to an Array and store its elements
   }
 
   deleteHistoryItem(item: string) {
-    this.searchHistory.delete(item);
+    this.searchHistory.delete(item); // delete the item from the searchHistory Set
 
-    this.storage.forEach((val, key, i) => {
-      if (val == item) {
-        this.storage.remove(key);
-      }
+    // search for item, and remove it from the history array
+    this.storage.get("Search History").then((history) => {
+      if (history != null)
+        for (let i in history)
+          if (item == history[i]) {
+            history.splice(i, 1); // remove item from history[]
+            this.storage.set("Search History", history);
+          }
     });
   }
 }
