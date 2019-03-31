@@ -20,7 +20,7 @@
       
       <ion-item-sliding *ngFor="let item of searchHistory">
         <ion-item>
-          <button ion-button clear fill default block (click)="viewSearchResults(item)">{{item}}</button>
+          <button ion-button clear fill default block (click)="viewSearchResults(item)" (press)="presentActionSheet(item)">{{item}}</button>
         </ion-item>
         
         <ion-item-options side="right">

@@ -1,6 +1,8 @@
 import { Storage } from '@ionic/storage';
 import { Injectable } from '@angular/core';
 
+const HISTORY_KEY: string = "Search History";
+
 @Injectable()
 export class SearchHistoryProvider {
 
@@ -10,9 +12,9 @@ export class SearchHistoryProvider {
     console.log('Hello SearchHistoryProvider Provider');
   }
 
-    // add each value of "Search History" to the searchHistory Set
+    // add each value of HISTORY_KEY to the searchHistory Set
     loadSearchHistory() : Set<string> {
-      this.storage.get("Search History").then((history) => {
+      this.storage.get(HISTORY_KEY).then((history) => {
         if (history != null) 
           for (let i in history)
             this.searchHistory.add(history[i]);
@@ -23,20 +25,25 @@ export class SearchHistoryProvider {
   
     addItemToHistory(item: string) {
       this.searchHistory.add(item);
-      this.storage.set("Search History", Array.from(this.searchHistory)); // convert the Set to an Array and store its elements
+      this.storage.set(HISTORY_KEY, Array.from(this.searchHistory)); // convert the Set to an Array and store its elements
     }
   
     deleteHistoryItem(item: string) {
       this.searchHistory.delete(item); // delete the item from the searchHistory Set
   
       // search for item, and remove it from the history array
-      this.storage.get("Search History").then((history) => {
+      this.storage.get(HISTORY_KEY).then((history) => {
         if (history != null)
           for (let i in history)
             if (item == history[i]) {
               history.splice(i, 1); // remove item from history[]
-              this.storage.set("Search History", history);
+              this.storage.set(HISTORY_KEY, history);
             }
       });
+    }
+
+    clearHistory() {
+      this.searchHistory.clear();
+      this.storage.remove(HISTORY_KEY);
     }
 }
