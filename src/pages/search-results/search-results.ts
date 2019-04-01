@@ -5,6 +5,8 @@ import { SimilarArtistsProvider } from '../../providers/similar-artists/similar-
 import { Storage } from '@ionic/storage';
 import { SearchHistoryProvider } from '../../providers/search-history/search-history';
 
+import { ToastController } from 'ionic-angular';
+
 @IonicPage()
 @Component({
   selector: 'page-search-results',
@@ -17,7 +19,7 @@ export class SearchResultsPage {
   saveHistory: boolean;
   artists: any = [];
 
-  constructor(public navCtrl: NavController, private similarArtistsProvider: SimilarArtistsProvider, public navParams: NavParams, private storage: Storage, private searchHistoryProvider: SearchHistoryProvider) {
+  constructor(public navCtrl: NavController, private similarArtistsProvider: SimilarArtistsProvider, public navParams: NavParams, private storage: Storage, private searchHistoryProvider: SearchHistoryProvider, public toastCtrl: ToastController) {
     this.searchQuery = navParams.get('userInput');
     this.saveHistory = navParams.get('saveHistory');
   }
@@ -25,7 +27,18 @@ export class SearchResultsPage {
   ionViewDidLoad() {
     this.similarArtistsProvider.getSearchResults(this.searchQuery).subscribe((data) => {
       this.artists = data.results.artistmatches.artist;
+
+      if (this.artists == "")
+        this.presentToast();
     });
+  }
+
+  presentToast() {
+    const toast = this.toastCtrl.create({
+      message: "No results found for \""+ this.searchQuery +"\".",
+      duration: 3000,
+    });
+    toast.present();
   }
 
   // Separate every thousandth digit with a comma.
