@@ -16,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { SimilarArtistsProvider } from '../providers/similar-artists/similar-artists';
 import { SearchHistoryProvider } from '../providers/search-history/search-history';
+import { TopArtistsProvider } from '../providers/top-artists/top-artists';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { SearchHistoryProvider } from '../providers/search-history/search-histor
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SimilarArtistsProvider,
-    SearchHistoryProvider
+    SearchHistoryProvider,
+    TopArtistsProvider
   ]
 })
 export class AppModule {}

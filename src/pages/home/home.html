@@ -18,6 +18,8 @@
       <ion-toggle [(ngModel)]="saveHistory" (ionChange)="updateSaveHistory()"></ion-toggle>
   </ion-item>
   
+  <br/>
+
   <ion-list *ngIf="saveHistory">
     <ion-item-sliding *ngFor="let item of searchHistory">
       <ion-item>

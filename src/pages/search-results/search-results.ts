@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ArtistInfoPage } from '../artist-info/artist-info';
 import { SimilarArtistsProvider } from '../../providers/similar-artists/similar-artists'
-import { Storage } from '@ionic/storage';
 import { SearchHistoryProvider } from '../../providers/search-history/search-history';
 
 import { ToastController } from 'ionic-angular';
@@ -19,7 +18,7 @@ export class SearchResultsPage {
   saveHistory: boolean;
   artists: any = [];
 
-  constructor(public navCtrl: NavController, private similarArtistsProvider: SimilarArtistsProvider, public navParams: NavParams, private storage: Storage, private searchHistoryProvider: SearchHistoryProvider, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, private similarArtistsProvider: SimilarArtistsProvider, public navParams: NavParams, private searchHistoryProvider: SearchHistoryProvider, public toastCtrl: ToastController) {
     this.searchQuery = navParams.get('userInput');
     this.saveHistory = navParams.get('saveHistory');
   }
