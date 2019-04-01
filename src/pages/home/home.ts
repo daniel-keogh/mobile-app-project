@@ -5,6 +5,8 @@ import { SearchResultsPage } from '../search-results/search-results';
 import { SearchHistoryProvider } from '../../providers/search-history/search-history';
 import { ActionSheetController } from 'ionic-angular';
 
+const HISTORY_TOGGLE_KEY: string = "Show Search History";
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -12,7 +14,7 @@ import { ActionSheetController } from 'ionic-angular';
 export class HomePage {
 
   searchHistory: Set<string> = new Set;
-  showHistory: boolean;
+  saveHistory: boolean;
 
   constructor(public navCtrl: NavController, public storage: Storage, private searchHistoryProvider: SearchHistoryProvider, private actionSheetCtrl: ActionSheetController) {
   }
@@ -20,21 +22,20 @@ export class HomePage {
   ionViewDidLoad() {
     this.searchHistory = this.searchHistoryProvider.loadSearchHistory();
     
-    this.storage.get("Show Search History").then((option) => {
-      if (option == false)
-        this.showHistory = false;
-      else
-        this.showHistory = true;
+    this.storage.get(HISTORY_TOGGLE_KEY).then((option) => {
+      this.saveHistory = (option == false) ? false : true;
     });
   }
 
   viewSearchResults(userInput : string) {
     if (userInput != "") {
       this.navCtrl.push(SearchResultsPage, {
-        userInput : userInput.trim()
+        userInput : userInput.trim(),
+        saveHistory : this.saveHistory
       });
   
-      this.searchHistoryProvider.addItemToHistory(userInput);
+      if (this.saveHistory)
+        this.searchHistoryProvider.addItemToHistory(userInput);
     }
   }
 
@@ -77,7 +78,7 @@ export class HomePage {
     actionSheet.present();
   }
 
-  updateShowHistory() {
-    this.storage.set("Show Search History", this.showHistory);
+  updateSaveHistory() {
+    this.storage.set(HISTORY_TOGGLE_KEY, this.saveHistory);
   }
 }

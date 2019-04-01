@@ -14,10 +14,12 @@ import { SearchHistoryProvider } from '../../providers/search-history/search-his
 export class SearchResultsPage {
 
   searchQuery: string;
+  saveHistory: boolean;
   artists: any = [];
 
   constructor(public navCtrl: NavController, private similarArtistsProvider: SimilarArtistsProvider, public navParams: NavParams, private storage: Storage, private searchHistoryProvider: SearchHistoryProvider) {
     this.searchQuery = navParams.get('userInput');
+    this.saveHistory = navParams.get('saveHistory');
   }
 
   ionViewDidLoad() {
@@ -46,7 +48,8 @@ export class SearchResultsPage {
       this.ionViewDidLoad();
       
       // add the item to search history
-      this.searchHistoryProvider.addItemToHistory(userInput);
+      if (this.saveHistory)
+        this.searchHistoryProvider.addItemToHistory(userInput);
     }
   }
 }

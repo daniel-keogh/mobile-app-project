@@ -15,10 +15,10 @@
 
   <ion-item>
       <ion-label>Search History:</ion-label>
-      <ion-toggle [(ngModel)]="showHistory" (ionChange)="updateShowHistory()"></ion-toggle>
+      <ion-toggle [(ngModel)]="saveHistory" (ionChange)="updateSaveHistory()"></ion-toggle>
   </ion-item>
   
-  <ion-list *ngIf="showHistory">
+  <ion-list *ngIf="saveHistory">
     <ion-list-header></ion-list-header>
       <ion-item-sliding *ngFor="let item of searchHistory">
         <ion-item>
