@@ -40,20 +40,30 @@ export class HomePage {
       title: item,
       buttons: [
         {
-          text: "Delete Item",
+          text: "Search for \""+ item + "\"",
+          icon: "search",
+          handler: () => {
+            this.viewSearchResults(item);
+          }
+        },
+        {
+          text: "Delete \""+ item + "\"",
           role: "destructive",
+          icon: "trash",
           handler: () => {
             this.deleteHistoryItem(item);
           }
         },{
           text: "Clear History",
           role: "destructive",
+          icon: "nuclear",
           handler: () => {
             this.searchHistoryProvider.clearHistory();
           }
         },{
           text: "Cancel",
-          role: "cancel"
+          role: "cancel",
+          icon: "close"
         }
       ]
     });
