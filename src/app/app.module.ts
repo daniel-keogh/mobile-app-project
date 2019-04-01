@@ -6,6 +6,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { ChartsPage } from '../pages/charts/charts';
+import { TabsPage } from '../pages/tabs/tabs';
 import { SearchResultsPage } from '../pages/search-results/search-results';
 import { ArtistInfoPage } from '../pages/artist-info/artist-info';
 
@@ -15,12 +17,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { SimilarArtistsProvider } from '../providers/similar-artists/similar-artists';
 import { SearchHistoryProvider } from '../providers/search-history/search-history';
 
+
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     SearchResultsPage,
-    ArtistInfoPage
+    ArtistInfoPage,
+    ChartsPage,
+    TabsPage
   ],
   imports: [
     BrowserModule,
@@ -33,7 +38,9 @@ import { SearchHistoryProvider } from '../providers/search-history/search-histor
     MyApp,
     HomePage,
     SearchResultsPage,
-    ArtistInfoPage
+    ArtistInfoPage,
+    ChartsPage,
+    TabsPage
   ],
   providers: [
     StatusBar,

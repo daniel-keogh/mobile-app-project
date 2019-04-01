@@ -1,8 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <ion-title>Search</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -15,9 +13,13 @@
 
   <br/><br/>
 
-  <ion-list>
-      <ion-list-header>Search History:</ion-list-header>
-      
+  <ion-item>
+      <ion-label>Search History:</ion-label>
+      <ion-toggle [(ngModel)]="showHistory" (ionChange)="updateShowHistory()"></ion-toggle>
+  </ion-item>
+  
+  <ion-list *ngIf="showHistory">
+    <ion-list-header></ion-list-header>
       <ion-item-sliding *ngFor="let item of searchHistory">
         <ion-item>
           <button ion-button clear fill default block (click)="viewSearchResults(item)" (press)="presentActionSheet(item)" style="text-transform: none;">{{item}}</button>

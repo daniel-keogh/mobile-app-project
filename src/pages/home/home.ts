@@ -12,12 +12,20 @@ import { ActionSheetController } from 'ionic-angular';
 export class HomePage {
 
   searchHistory: Set<string> = new Set;
+  showHistory: boolean;
 
   constructor(public navCtrl: NavController, public storage: Storage, private searchHistoryProvider: SearchHistoryProvider, private actionSheetCtrl: ActionSheetController) {
   }
 
   ionViewDidLoad() {
     this.searchHistory = this.searchHistoryProvider.loadSearchHistory();
+    
+    this.storage.get("Show Search History").then((option) => {
+      if (option == false)
+        this.showHistory = false;
+      else
+        this.showHistory = true;
+    });
   }
 
   viewSearchResults(userInput : string) {
@@ -33,7 +41,6 @@ export class HomePage {
   deleteHistoryItem(item: string) {
     this.searchHistoryProvider.deleteHistoryItem(item);
   }
-
   
   presentActionSheet(item: string) {
     const actionSheet = this.actionSheetCtrl.create({
@@ -68,5 +75,9 @@ export class HomePage {
       ]
     });
     actionSheet.present();
+  }
+
+  updateShowHistory() {
+    this.storage.set("Show Search History", this.showHistory);
   }
 }
