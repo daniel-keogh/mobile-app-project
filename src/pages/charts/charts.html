@@ -6,13 +6,12 @@
 
 <ion-content padding>
   <ion-list *ngFor="let track of topTracks; let i = index">
-    <ion-item>
-      <ion-thumbnail item-start>
+    <ion-item text-wrap>
+      <ion-avatar item-start>
         <img src="{{track.image[2]['#text']}}">
-      </ion-thumbnail>
+      </ion-avatar>
       <h2>{{track.name}}</h2>
       <p>{{track.artist.name}}</p>
-      <button ion-button clear item-end>View</button>
     </ion-item>
   </ion-list>
 </ion-content>

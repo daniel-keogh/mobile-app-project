@@ -22,9 +22,7 @@
 
   <ion-list *ngIf="saveHistory">
     <ion-item-sliding *ngFor="let item of searchHistory">
-      <ion-item>
-        <button ion-button clear fill default block (click)="viewSearchResults(item)" (press)="presentActionSheet(item)" style="text-transform: none;">{{item}}</button>
-      </ion-item>
+      <button ion-item clear fill default block (click)="viewSearchResults(item)" (press)="presentActionSheet(item)" style="text-align: center">{{item}}</button>
       
       <ion-item-options side="right">
         <button ion-button color="danger" (click)="deleteHistoryItem(item)">
