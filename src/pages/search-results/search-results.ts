@@ -40,10 +40,21 @@ export class SearchResultsPage {
     toast.present();
   }
 
-  // Separate every thousandth digit with a comma.
-  commaSeparate(numListeners: string) : string {
-    // Source: Elias Zamaria - https://stackoverflow.com/a/2901298
-    return numListeners.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  abbreviateNumListeners(numListeners: any) : string {
+    // Source: tobyjsullivan - https://gist.github.com/tobyjsullivan/96d37ca0216adee20fa95fe1c3eb56ac
+    const suffixes = ["", "K", "M", "B", "T"];
+    
+    let suffixNum = 0;
+
+    while (numListeners >= 1000) {
+      numListeners /= 1000;
+      suffixNum++;
+    }
+
+    numListeners = numListeners.toPrecision(3);
+    numListeners += suffixes[suffixNum];
+
+    return numListeners;
   }
 
   viewArtist(artistIndex: number) {
