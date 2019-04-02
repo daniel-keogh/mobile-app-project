@@ -16,7 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { SimilarArtistsProvider } from '../providers/similar-artists/similar-artists';
 import { SearchHistoryProvider } from '../providers/search-history/search-history';
-import { TopArtistsProvider } from '../providers/top-artists/top-artists';
+import { TopTracksProvider } from '../providers/top-tracks/top-tracks';
 
 
 @NgModule({
@@ -49,7 +49,7 @@ import { TopArtistsProvider } from '../providers/top-artists/top-artists';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SimilarArtistsProvider,
     SearchHistoryProvider,
-    TopArtistsProvider
+    TopTracksProvider
   ]
 })
 export class AppModule {}

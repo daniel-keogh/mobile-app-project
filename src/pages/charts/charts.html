@@ -5,12 +5,13 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list *ngFor="let topArtist of topArtists; let i = index">
+  <ion-list *ngFor="let track of topTracks; let i = index">
     <ion-item>
       <ion-thumbnail item-start>
-        <img src="{{topArtist.image[2]['#text']}}">
+        <img src="{{track.image[2]['#text']}}">
       </ion-thumbnail>
-      <h2>{{topArtist.name}}</h2>
+      <h2>{{track.name}}</h2>
+      <p>{{track.artist.name}}</p>
       <button ion-button clear item-end>View</button>
     </ion-item>
   </ion-list>
