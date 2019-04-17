@@ -1,21 +1,28 @@
 <ion-header>
   <ion-navbar>
     <ion-title>Charts</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="openSelect()">
+          <ion-icon name="more"></ion-icon>
+        </button>
+     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
+<ion-item>
+    <ion-label>Chart Type</ion-label>
+    <ion-select [(ngModel)]="chartType" #selectChartType>
+        <ion-option value="Tracks">Top Tracks</ion-option>
+        <ion-option value="Artists">Top Artists</ion-option>
+    </ion-select>
+</ion-item>
+
 <ion-content padding>
   <ion-item>
-      <ion-label>Type</ion-label>
-      <ion-select [(ngModel)]="chartType" interface="popover">
-          <ion-option value="tracks">Top Tracks</ion-option>
-          <ion-option value="artists">Top Artists</ion-option>
-        </ion-select>
+      <ion-label>Top {{chartType}}</ion-label>
   </ion-item>
 
-  <br/>
-
-  <ion-item *ngIf="chartType == 'tracks'">
+  <ion-item *ngIf="chartType == 'Tracks'">
     <ion-list *ngFor="let item of topTracks">
       <ion-item text-wrap (click)="viewArtist(item.artist.name)">
         <ion-avatar item-start>
@@ -27,7 +34,7 @@
     </ion-list>
   </ion-item>
 
-  <ion-item *ngIf="chartType == 'artists'">
+  <ion-item *ngIf="chartType == 'Artists'">
       <ion-list *ngFor="let item of topArtists">
         <ion-item text-wrap (click)="viewArtist(item.name)">
           <ion-avatar item-start>

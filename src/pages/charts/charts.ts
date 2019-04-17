@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild  } from '@angular/core';
+import { IonicPage, NavController, NavParams, Select } from 'ionic-angular';
 import { ChartsProvider } from '../../providers/charts/charts';
 import { ArtistInfoPage } from '../artist-info/artist-info';
 
@@ -14,13 +14,19 @@ export class ChartsPage {
   topTracks: any = [];
   chartType: string;
 
+  @ViewChild('selectChartType') select: Select;
   constructor(public navCtrl: NavController, public navParams: NavParams, public chartsProvider: ChartsProvider) {
   }
 
   ionViewDidLoad() {
-    this.chartType = "tracks";
+    this.chartType = "Tracks";
     this.loadCharts();
   } 
+
+  // Reference: Paresh Gami - https://stackoverflow.com/a/48656554
+  openSelect() {
+      this.select.open();
+  }
 
   loadCharts() {
     this.chartsProvider.getTopArtists().subscribe((data) => {
