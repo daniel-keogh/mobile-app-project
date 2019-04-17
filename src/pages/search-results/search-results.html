@@ -9,12 +9,10 @@
 </ion-header>
 
 <ion-content padding>
-
   <ion-grid>
-    <ion-row>
-        <ion-col>
-          <ion-card *ngFor="let artist of artists; let i = index">
-
+    <ion-row justify-content-center>
+        <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 *ngFor="let artist of artists; let i = index">
+          <ion-card>
               <img src="{{artist.image[4]['#text']}}" onerror="this.src='../../assets/imgs/imgNotFound.png'" height="300" width="300"/>
 
               <ion-card-content>

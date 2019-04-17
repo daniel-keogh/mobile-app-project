@@ -42,23 +42,23 @@ export class SearchResultsPage {
 
   abbreviateNumListeners(numListeners: any) : string {
     // Based on: https://gist.github.com/tobyjsullivan/96d37ca0216adee20fa95fe1c3eb56ac - tobyjsullivan
-    const suffixes = ["", "K", "M", "B", "T"];
-
+    let newValue = numListeners;
+    const suffixes = ["", "K", "M", "B","T"];  
     let suffixNum = 0;
 
     if (numListeners < 1000) {
       return numListeners;
     }
-    else { 
-      while (numListeners >= 1000) {
-        numListeners /= 1000;
+    else {
+      while (newValue >= 1000) {
+        newValue /= 1000;
         suffixNum++;
-
-        numListeners = numListeners.toPrecision(3);
-        numListeners += suffixes[suffixNum];
-    
-        return numListeners;
       }
+    
+      newValue = newValue.toPrecision(3);
+      newValue += suffixes[suffixNum];
+
+      return newValue;
     }
   }
 
