@@ -49,14 +49,16 @@ export class SearchResultsPage {
     if (numListeners < 1000) {
       return numListeners;
     }
-    else while (numListeners >= 1000) {
-      numListeners /= 1000;
-      suffixNum++;
+    else { 
+      while (numListeners >= 1000) {
+        numListeners /= 1000;
+        suffixNum++;
 
-      numListeners = numListeners.toPrecision(3);
-      numListeners += suffixes[suffixNum];
-  
-      return numListeners;
+        numListeners = numListeners.toPrecision(3);
+        numListeners += suffixes[suffixNum];
+    
+        return numListeners;
+      }
     }
   }
 

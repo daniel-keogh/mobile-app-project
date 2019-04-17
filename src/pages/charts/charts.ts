@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { TopTracksProvider } from '../../providers/top-tracks/top-tracks';
+import { ChartsProvider } from '../../providers/charts/charts';
+import { ArtistInfoPage } from '../artist-info/artist-info';
 
 @IonicPage()
 @Component({
@@ -9,15 +10,31 @@ import { TopTracksProvider } from '../../providers/top-tracks/top-tracks';
 })
 export class ChartsPage {
 
+  topArtists: any = [];
   topTracks: any = [];
+  chartType: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public topTracksProvider: TopTracksProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public chartsProvider: ChartsProvider) {
   }
 
   ionViewDidLoad() {
-    this.topTracksProvider.getTopTracks().subscribe((data) => {
+    this.chartType = "tracks";
+    this.loadCharts();
+  } 
+
+  loadCharts() {
+    this.chartsProvider.getTopArtists().subscribe((data) => {
+      this.topArtists = data.artists.artist;
+    });
+
+    this.chartsProvider.getTopTracks().subscribe((data) => {     
       this.topTracks = data.tracks.track;
     });
   }
 
+  viewArtist(artist: string) {
+    this.navCtrl.push(ArtistInfoPage, {
+      artist : artist
+    });
+  }
 }
