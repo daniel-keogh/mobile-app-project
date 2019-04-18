@@ -5,9 +5,42 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
-    <ion-card-content>
-      <ion-card-title>{{artistInfo.name}}</ion-card-title>
-    </ion-card-content>
-  </ion-card>
+  <ion-segment [(ngModel)]="segment">
+    <ion-segment-button value="thisArtist">{{artist}}</ion-segment-button>
+    <ion-segment-button value="similar">Similar</ion-segment-button>
+  </ion-segment>
+
+  <div [ngSwitch]="segment">
+    <ion-list *ngSwitchCase="'thisArtist'">
+        <ion-card>
+            <img src="{{artistImg}}" onerror="this.src='../../assets/imgs/imgNotFound.png'" height="300" width="300"/>
+            <ion-card-content (tap)="showMoreLess($event)">
+              <ion-card-title>{{artistInfo.name}}</ion-card-title>
+              <p>{{bio}}</p>
+            </ion-card-content>
+          </ion-card>
+    </ion-list>
+  
+    <ion-list *ngSwitchCase="'similar'">
+        <ion-grid>
+            <ion-row justify-content-center>
+                <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 *ngFor="let similarArtist of similarArtists; let i = index">
+                  <ion-card>
+                      <img src="{{similarArtist.image[4]['#text']}}" onerror="this.src='../../assets/imgs/imgNotFound.png'" height="300" width="300"/>
+        
+                      <ion-card-content>
+                        <ion-card-title>{{similarArtist.name}}</ion-card-title>
+                        <hr/>
+                        <button ion-button icon-end block (click)="viewArtist(i)">
+                            View
+                            <ion-icon name="arrow-forward" style="margin-left: 5px"></ion-icon> 
+                        </button>
+                      </ion-card-content>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+          </ion-grid>
+    </ion-list>
+  </div>
+
 </ion-content>
