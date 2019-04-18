@@ -17,6 +17,7 @@ export class SearchResultsPage {
   searchQuery: string;
   saveHistory: boolean;
   artists: any = [];
+  noResults: boolean = false;
 
   constructor(public navCtrl: NavController, private similarArtistsProvider: SimilarArtistsProvider, public navParams: NavParams, private searchHistoryProvider: SearchHistoryProvider, public toastCtrl: ToastController) {
     this.searchQuery = navParams.get('userInput');
@@ -27,13 +28,18 @@ export class SearchResultsPage {
     this.similarArtistsProvider.getSearchResults(this.searchQuery).subscribe((data) => {
       this.artists = data.results.artistmatches.artist;
 
-      if (this.artists == "")
+      if (this.artists == "") {
+        this.noResults = true;
         this.presentToast();
+      }
+    }, err => {
+      this.noResults = true;
+      this.presentToast();
     });
   }
 
   presentToast() {
-    const toast = this.toastCtrl.create({
+    let toast = this.toastCtrl.create({
       message: "No results found for \""+ this.searchQuery +"\".",
       duration: 3000,
     });

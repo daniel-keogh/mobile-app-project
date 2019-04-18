@@ -18,6 +18,14 @@
 </ion-item>
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="refreshCharts($event)">
+      <ion-refresher-content
+          pullingIcon="arrow-dropdown"
+          pullingText="Pull to refresh"
+          refreshingText="Refreshing...">
+      </ion-refresher-content>
+  </ion-refresher>
+
   <ion-item>
       <ion-label>Top {{chartType}}</ion-label>
   </ion-item>
