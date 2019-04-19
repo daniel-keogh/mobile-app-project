@@ -11,36 +11,52 @@
   </ion-segment>
 
   <div [ngSwitch]="segment">
-    <ion-list *ngSwitchCase="'thisArtist'">
+    <div *ngSwitchCase="'thisArtist'">
         <ion-card>
             <img src="{{artistImg}}" onerror="this.src='../../assets/imgs/imgNotFound.png'" height="300" width="300"/>
             <ion-card-content (tap)="showMoreLess($event)">
               <ion-card-title>{{artistInfo.name}}</ion-card-title>
               <p>{{bio}}</p>
             </ion-card-content>
+        </ion-card>
+
+    <ion-slides pager>
+        <ion-slide *ngFor="let album of topAlbums">
+          <ion-card id="album-card" (tap)="viewAlbum(album.name)">
+            <img src="{{album.image[2]['#text']}}">
+            <ion-card-content>
+              <p>{{album.name}}</p>
+            </ion-card-content>
           </ion-card>
-    </ion-list>
+        </ion-slide>
+    </ion-slides>
   
-    <ion-list *ngSwitchCase="'similar'">
-        <ion-grid>
-            <ion-row justify-content-center>
-                <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 *ngFor="let similarArtist of similarArtists; let i = index">
-                  <ion-card>
-                      <img src="{{similarArtist.image[4]['#text']}}" onerror="this.src='../../assets/imgs/imgNotFound.png'" height="300" width="300"/>
-        
-                      <ion-card-content>
-                        <ion-card-title>{{similarArtist.name}}</ion-card-title>
-                        <hr/>
-                        <button ion-button icon-end block (click)="viewArtist(i)">
-                            View
-                            <ion-icon name="arrow-forward" style="margin-left: 5px"></ion-icon> 
-                        </button>
-                      </ion-card-content>
-                  </ion-card>
-                </ion-col>
-              </ion-row>
-          </ion-grid>
-    </ion-list>
+    <ion-item-group>
+        <ion-item-divider color="light">Top Tracks</ion-item-divider>
+        <ion-item *ngFor="let track of topTracks; let i = index">
+          <p>{{i + 1}}. {{track.name}}</p>
+        </ion-item>
+    </ion-item-group>
+  </div>
+  
+    <ion-grid *ngSwitchCase="'similar'">
+      <ion-row justify-content-center>
+        <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 *ngFor="let similarArtist of similarArtists; let i = index">
+          <ion-card>
+            <img src="{{similarArtist.image[4]['#text']}}" onerror="this.src='../../assets/imgs/imgNotFound.png'" height="300" width="300"/>
+
+            <ion-card-content>
+              <ion-card-title>{{similarArtist.name}}</ion-card-title>
+              <hr/>
+              <button ion-button icon-end block (click)="viewArtist(i)" class="view-artist">
+                  View
+                  <ion-icon name="arrow-forward"></ion-icon> 
+              </button>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 
 </ion-content>

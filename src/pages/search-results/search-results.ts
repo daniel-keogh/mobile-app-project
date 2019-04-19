@@ -32,6 +32,9 @@ export class SearchResultsPage {
         this.noResults = true;
         this.presentToast();
       }
+      else {
+        this.noResults = false;
+      }
     }, err => {
       this.noResults = true;
       this.presentToast();

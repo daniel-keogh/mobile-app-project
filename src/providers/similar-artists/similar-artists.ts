@@ -22,6 +22,18 @@ export class SimilarArtistsProvider {
     return this.http.get("https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist="+ artist +"&api_key=05474453d4140db7fad8d7eee652eee3&format=json");
   }
 
+  getTopTracks(artist: string): Observable<any> { 
+    return this.http.get("https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist="+ artist +"&api_key=05474453d4140db7fad8d7eee652eee3&limit=15&format=json")
+  }
+
+  getTopAlbums(artist: string): Observable<any> { 
+    return this.http.get("https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist="+ artist +"&api_key=05474453d4140db7fad8d7eee652eee3&limit=5&format=json")
+  }
+
+  getAlbumInfo(album: string, artist: string): Observable<any> {
+    return this.http.get("https://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=05474453d4140db7fad8d7eee652eee3&artist="+ artist +"&album="+ album +"&format=json");
+  }
+
   getSimilar(artist: string): Observable<any> {
     return this.http.get("https://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist="+ artist +"&api_key=05474453d4140db7fad8d7eee652eee3&limit=20&format=json");
   }

@@ -9,9 +9,9 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-item *ngIf="noResults">
+  <ion-item *ngIf="noResults" class="no-results">
     <ion-icon name="warning"></ion-icon>
-    <p style="display: inline;">No results found.</p>
+    <p>No results found.</p>
   </ion-item>
 
   <ion-grid>
@@ -28,9 +28,9 @@
                   <ion-badge color="secondary" value="listeners" item-end>{{abbreviateNumListeners(artist.listeners)}}</ion-badge>
                 </ion-item>
                 <br/>
-                <button ion-button icon-end block (click)="viewArtist(i)">
+                <button ion-button icon-end block (click)="viewArtist(i)" class="view-artist">
                     View
-                    <ion-icon name="arrow-forward" style="margin-left: 5px"></ion-icon> 
+                    <ion-icon name="arrow-forward"></ion-icon> 
                 </button>
               </ion-card-content>
           </ion-card>

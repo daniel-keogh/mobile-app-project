@@ -10,6 +10,7 @@ import { ChartsPage } from '../pages/charts/charts';
 import { TabsPage } from '../pages/tabs/tabs';
 import { SearchResultsPage } from '../pages/search-results/search-results';
 import { ArtistInfoPage } from '../pages/artist-info/artist-info';
+import {AlbumModalPage } from '../pages/album-modal/album-modal';
 
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http';
@@ -26,11 +27,12 @@ import { ChartsProvider } from '../providers/charts/charts';
     SearchResultsPage,
     ArtistInfoPage,
     ChartsPage,
-    TabsPage
+    TabsPage,
+    AlbumModalPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {tabsHideOnSubPages: true}),
     HttpClientModule,
     IonicStorageModule.forRoot()
   ],
@@ -41,7 +43,8 @@ import { ChartsProvider } from '../providers/charts/charts';
     SearchResultsPage,
     ArtistInfoPage,
     ChartsPage,
-    TabsPage
+    TabsPage,
+    AlbumModalPage
   ],
   providers: [
     StatusBar,
