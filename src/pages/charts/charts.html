@@ -22,15 +22,13 @@
 
   <br/> 
 
-  <ion-item>
-    <ion-list *ngFor="let track of topTracks">
-      <ion-item text-wrap (click)="viewArtist(track.artist.name)">
-        <ion-avatar item-start>
-          <img src="{{track.album.cover_medium}}">
-        </ion-avatar>
-        <h2>{{track.title}}</h2>
-        <p>{{track.artist.name}}</p>
-      </ion-item>
-    </ion-list>
-  </ion-item>
+  <ion-list>
+    <button ion-item text-wrap (click)="viewArtist(track.artist.name)" *ngFor="let track of topTracks">
+      <ion-avatar item-start>
+        <img src="{{track.album.cover_medium}}">
+      </ion-avatar>
+      <h2>{{track.title}}</h2>
+      <p>{{track.artist.name}}</p>
+    </button>
+  </ion-list>
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ArtistInfoPage } from '../artist-info/artist-info';
 import { SimilarArtistsProvider } from '../../providers/similar-artists/similar-artists'
 import { SearchHistoryProvider } from '../../providers/search-history/search-history';
@@ -19,14 +19,24 @@ export class SearchResultsPage {
   artists: any = [];
   noResults: boolean = false;
 
-  constructor(public navCtrl: NavController, private similarArtistsProvider: SimilarArtistsProvider, public navParams: NavParams, private searchHistoryProvider: SearchHistoryProvider, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, private similarArtistsProvider: SimilarArtistsProvider, public navParams: NavParams, private searchHistoryProvider: SearchHistoryProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
     this.searchQuery = navParams.get('userInput');
     this.saveHistory = navParams.get('saveHistory');
   }
 
   ionViewDidLoad() {
+    this.loadResults();
+  }
+
+  loadResults() {
+    const loader = this.loadingCtrl.create({
+      content: "Loading...",
+    });
+    loader.present();
+
     this.similarArtistsProvider.getSearchResults(this.searchQuery).subscribe((data) => {
       this.artists = data.results.artistmatches.artist;
+      loader.dismiss();
 
       if (this.artists == "") {
         this.noResults = true;
@@ -36,6 +46,7 @@ export class SearchResultsPage {
         this.noResults = false;
       }
     }, err => {
+      loader.dismiss();
       this.noResults = true;
       this.presentToast();
     });

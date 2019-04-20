@@ -16,13 +16,10 @@ export class ArtistInfoPage {
   artist: string;
   artistImg: any;
   artistInfo: any = [];
-
   bio: any;
   bioSummary: any = [];
   bioContent: any = [];
-
   similarArtists: any = [];
-
   topAlbums: any = [];
   topTracks: any = [];
 
@@ -33,22 +30,26 @@ export class ArtistInfoPage {
   ionViewDidLoad() {
     this.segment = "thisArtist";
 
+    this.loadArtistInfo();
     this.loadTopAlbums();
     this.loadTopTracks();
-    this.loadArtistInfo();
-
-    this.similarArtistsProvider.getSimilar(this.artist).subscribe((data) => {
-      this.similarArtists = data.similarartists.artist;
-    });
+    this.loadSimilarArtists();
   }
 
   loadArtistInfo() {
     this.similarArtistsProvider.getArtistInfo(this.artist).subscribe((data) => {
       this.artistInfo = data.artist;
       this.artistImg = data.artist.image[4]['#text'];
-      this.bioContent = data.artist.bio.content;
-      this.bioSummary = data.artist.bio.summary;
+
+      this.bioContent = this.cleantext(data.artist.bio.content);
+      this.bioSummary = this.cleantext(data.artist.bio.summary);
       this.bio = this.bioSummary;
+    });
+  }
+
+  loadSimilarArtists() {
+    this.similarArtistsProvider.getSimilar(this.artist).subscribe((data) => {
+      this.similarArtists = data.similarartists.artist;
     });
   }
 
@@ -62,6 +63,12 @@ export class ArtistInfoPage {
     this.similarArtistsProvider.getTopTracks(this.artist).subscribe((data) => {
       this.topTracks = data.toptracks.track;
     });
+  }
+
+  // Removes HTML tags from text.
+  // Source: https://stackoverflow.com/a/5002161
+  cleantext(text: string): string {
+    return text.replace(/<\/?[^>]+(>|$)/g, "");
   }
 
   showMoreLess() {

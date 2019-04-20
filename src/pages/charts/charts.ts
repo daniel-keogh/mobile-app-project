@@ -1,5 +1,5 @@
 import { Component  } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { ChartsProvider } from '../../providers/charts/charts';
 import { ArtistInfoPage } from '../artist-info/artist-info';
 
@@ -14,7 +14,7 @@ export class ChartsPage {
   playlistID: number;
   countryPlaylists: object;
  
-  constructor(public navCtrl: NavController, public navParams: NavParams, public chartsProvider: ChartsProvider, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public chartsProvider: ChartsProvider, private toastCtrl: ToastController, public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
@@ -27,16 +27,27 @@ export class ChartsPage {
   } 
 
   loadDeezerCharts() {
+    const loader = this.loadingCtrl.create({
+      content: "Loading..."
+    });
+    loader.present();
+
     this.chartsProvider.getCharts(this.playlistID).subscribe((data) => {
       this.topTracks = data.data;
+      loader.dismiss();
     }, err => {
+      loader.dismiss();
       this.refreshFailedToast();
     });
   }
 
   refreshCharts(refresher) {
     setTimeout(() => {
-      this.loadDeezerCharts();
+      this.chartsProvider.getCharts(this.playlistID).subscribe((data) => {
+        this.topTracks = data.data;
+      }, err => {
+        this.refreshFailedToast();
+      });
       refresher.complete();
     }, 2000);
   }
