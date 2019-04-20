@@ -9,7 +9,6 @@ export class SearchHistoryProvider {
   searchHistory: Set<string> = new Set;
 
   constructor(public storage: Storage) {
-    console.log('Hello SearchHistoryProvider Provider');
   }
 
     // add each value of HISTORY_KEY to the searchHistory Set

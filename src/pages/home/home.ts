@@ -29,7 +29,7 @@ export class HomePage {
   }
 
   ionViewDidLeave() {
-    if (this.saveHistory)
+    if (this.saveHistory && this.searchQuery != null)
       this.searchHistoryProvider.addItemToHistory(this.searchQuery);
   }
 

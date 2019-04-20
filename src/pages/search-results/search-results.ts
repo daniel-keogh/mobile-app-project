@@ -60,7 +60,7 @@ export class SearchResultsPage {
     toast.present();
   }
 
-  abbreviateNumListeners(numListeners: any) : string {
+  abbreviateNumListeners(numListeners: any): string {
     // Based on: https://gist.github.com/tobyjsullivan/96d37ca0216adee20fa95fe1c3eb56ac - tobyjsullivan
     let newValue = numListeners;
     const suffixes = ["", "K", "M", "B","T"];  
@@ -82,15 +82,13 @@ export class SearchResultsPage {
     }
   }
 
-  viewArtist(artistIndex: number) {
-    let artistName: string = this.artists[artistIndex].name;
-
+  viewArtist(artistName: string) {
     this.navCtrl.push(ArtistInfoPage, {
       artist : artistName
     });
   }
 
-  viewSearchResults(userInput : string) {
+  viewSearchResults(userInput: string) {
     if (userInput != "") {
       this.searchQuery = userInput;
       this.ionViewDidLoad();

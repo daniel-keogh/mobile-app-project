@@ -16,7 +16,7 @@
 
   <ion-grid>
     <ion-row justify-content-center>
-        <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 *ngFor="let artist of artists; let i = index">
+        <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 *ngFor="let artist of artists">
           <ion-card>
               <img src="{{artist.image[4]['#text']}}" onerror="this.src='../../assets/imgs/imgNotFound.png'" height="300" width="300"/>
 
@@ -28,7 +28,7 @@
                   <ion-badge color="secondary" value="listeners" item-end>{{abbreviateNumListeners(artist.listeners)}}</ion-badge>
                 </ion-item>
                 <br/>
-                <button ion-button icon-end block (click)="viewArtist(i)" class="view-artist">
+                <button ion-button icon-end block (click)="viewArtist(artist.name)" class="view-artist">
                     View
                     <ion-icon name="arrow-forward"></ion-icon> 
                 </button>

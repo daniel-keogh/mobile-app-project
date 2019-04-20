@@ -83,11 +83,13 @@ export class ArtistInfoPage {
     modal.present();
   }
 
-  viewArtist(artistIndex: number) {
-    let artistName: string = this.similarArtists[artistIndex].name;
-
+  viewArtist(artistName: string) {
     this.navCtrl.push(ArtistInfoPage, {
-      artist : artistName
+      artist : artistName,
     });
+  }
+
+  videoSearch(artistName: string, trackName: string) {
+    
   }
 }

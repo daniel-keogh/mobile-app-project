@@ -48,19 +48,20 @@
             <ion-item-divider color="light">Top Tracks</ion-item-divider>
             <ion-item *ngFor="let track of topTracks; let i = index">
               <p>{{i + 1}}. {{track.name}}</p>
+              <button ion-button clear item-end (click)="videoSearch(track.artist.name, track.name)"><ion-icon color="danger" name="logo-youtube"></ion-icon></button>
             </ion-item>
         </ion-item-group>
     </div>
   
     <ion-grid *ngSwitchCase="'similar'">
       <ion-row justify-content-center>
-        <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 *ngFor="let similarArtist of similarArtists; let i = index">
+        <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 *ngFor="let similarArtist of similarArtists">
           <ion-card>
             <img src="{{similarArtist.image[4]['#text']}}" onerror="this.src='../../assets/imgs/imgNotFound.png'" height="300" width="300"/>
 
             <ion-card-content>
               <ion-card-title>{{similarArtist.name}}</ion-card-title>
-              <button ion-button icon-end block (click)="viewArtist(i)" class="view-artist">
+              <button ion-button icon-end block (click)="viewArtist(similarArtist.name)" class="view-artist">
                   View
                   <ion-icon name="arrow-forward"></ion-icon> 
               </button>
