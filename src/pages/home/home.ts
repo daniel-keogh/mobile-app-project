@@ -15,6 +15,7 @@ export class HomePage {
 
   searchHistory: Set<string> = new Set;
   saveHistory: boolean;
+  searchQuery: string;
 
   constructor(public navCtrl: NavController, public storage: Storage, private searchHistoryProvider: SearchHistoryProvider, private actionSheetCtrl: ActionSheetController) {
   }
@@ -27,15 +28,19 @@ export class HomePage {
     });
   }
 
+  ionViewDidLeave() {
+    if (this.saveHistory)
+      this.searchHistoryProvider.addItemToHistory(this.searchQuery);
+  }
+
   viewSearchResults(userInput : string) {
     if (userInput != "") {
       this.navCtrl.push(SearchResultsPage, {
         userInput : userInput.trim(),
         saveHistory : this.saveHistory
       });
-  
-      if (this.saveHistory)
-        this.searchHistoryProvider.addItemToHistory(userInput);
+
+      this.searchQuery = userInput;
     }
   }
 
