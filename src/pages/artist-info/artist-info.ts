@@ -19,6 +19,7 @@ export class ArtistInfoPage {
   bio: any;
   bioSummary: any = [];
   bioContent: any = [];
+  showTgl: string;
   similarArtists: any = [];
   topAlbums: any = [];
   topTracks: any = [];
@@ -29,6 +30,7 @@ export class ArtistInfoPage {
 
   ionViewDidLoad() {
     this.segment = "thisArtist";
+    this.showTgl = "Show More";
 
     this.loadArtistInfo();
     this.loadTopAlbums();
@@ -72,7 +74,14 @@ export class ArtistInfoPage {
   }
 
   showMoreLess() {
-    this.bio = (this.bio == this.bioSummary) ? this.bioContent : this.bioSummary;
+    if (this.bio == this.bioSummary) {
+      this.bio = this.bioContent;
+      this.showTgl = "Show Less";
+    }
+    else {
+      this.bio = this.bioSummary;
+      this.showTgl = "Show More";
+    }
   }
 
   viewAlbum(album: string) {

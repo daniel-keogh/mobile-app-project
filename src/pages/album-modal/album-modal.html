@@ -10,5 +10,26 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-item class="album-summary">
+    <ion-row justify-content-center>
+      <img src={{albumCover}} onerror="this.src='../../assets/imgs/imgNotFound.png'"/>
+    </ion-row>
+    <br/>
+    <ion-row justify-content-center>
+        <p>{{album.name}}</p>
+    </ion-row>
+    <ion-row justify-content-center>
+        <p>{{album.artist}}</p>
+    </ion-row>
+  </ion-item>
 
+  <br/>
+  
+  <ion-item-group>
+      <ion-item-divider color="light">Top Tracks</ion-item-divider>
+      <ion-item *ngFor="let track of tracklist; let i = index">
+        <p>{{i + 1}}. {{track.name}}</p>
+        <button ion-button clear item-end (click)="videoSearch(track.artist.name, track.name)"><ion-icon color="danger" name="logo-youtube"></ion-icon></button>
+      </ion-item>
+  </ion-item-group>
 </ion-content>

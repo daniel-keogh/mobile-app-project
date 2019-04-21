@@ -13,6 +13,8 @@ export class AlbumModalPage {
   album: any = []
   albumName: string;
   artistName: string;
+  albumCover: string;
+  tracklist: any = [];
 
   constructor(public navParams: NavParams, public viewCtrl: ViewController, private similarArtistsProvider: SimilarArtistsProvider) {
     this.albumName = navParams.get("albumName");
@@ -20,13 +22,18 @@ export class AlbumModalPage {
   }
 
   ionViewDidLoad() {
+    this.loadAlbumInfo();
+  }
+
+  loadAlbumInfo() {
     this.album = this.similarArtistsProvider.getAlbumInfo(this.albumName, this.artistName).subscribe((data) => {
       this.album = data.album;
+      this.tracklist = data.album.tracks.track;
+      this.albumCover = data.album.image[4]['#text'];
     });
   }
 
   dismiss() {
     this.viewCtrl.dismiss();
   }
-
 }
