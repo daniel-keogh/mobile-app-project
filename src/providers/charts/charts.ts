@@ -22,7 +22,7 @@ export class ChartsProvider {
   }
 
   getCountries(): Observable<any> {
-    return this.http.get("../../assets/country-charts.json");
+    return this.http.get("../../assets/country-charts.json"); // read from local JSON file.
   }
 
   // Return the playlist ID. If the users locale was not found, or there is no matching country then use WORLDWIDE_PLAYLIST_ID by default. 

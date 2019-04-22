@@ -33,7 +33,8 @@
       "playlist_id": 1266968331,
       "locale": [
         "nl-BE",
-        "fr-BE"
+        "fr-BE",
+        "de-BE"
       ]
     },
     {
@@ -54,7 +55,8 @@
       "name": "Canada",
       "playlist_id": 1652248171,
       "locale": [
-        "en-CA"
+        "en-CA",
+        "fr-CA"
       ]
     },
     {
@@ -131,7 +133,8 @@
       "name": "Finland",
       "playlist_id": 1221034071,
       "locale": [
-        "fi-FI"
+        "fi-FI",
+        "sv-FI"
       ]
     },
     {
@@ -180,7 +183,8 @@
       "name": "Ireland",
       "playlist_id": 1313619455,
       "locale": [
-        "en-IE"
+        "en-IE",
+        "ga-IE"
       ]
     },
     {
@@ -257,14 +261,17 @@
       "name": "Netherlands",
       "playlist_id": 1266971851,
       "locale": [
-        "nl-NL"
+        "nl-NL",
+        "fy-NL"
       ]
     },
     {
       "name": "Norway",
       "playlist_id": 1313619885,
       "locale": [
-        "no-NO"
+        "no-NO",
+        "nb-NO",
+        "nn-NO"
       ]
     },
     {
@@ -285,7 +292,8 @@
       "name": "Philippines",
       "playlist_id": 1362518895,
       "locale": [
-        "en-PH"
+        "en-PH",
+        "fil-PH"
       ]
     },
     {
@@ -335,7 +343,7 @@
       "name": "Serbia",
       "playlist_id": 1266972981,
       "locale": [
-        "sr-RS", 
+        "sr-Cyrl-RS", 
         "sr-Latn-RS"
       ]
     },
@@ -365,7 +373,9 @@
       "name": "South Africa",
       "playlist_id": 1362528775,
       "locale": [
-        "en-ZA"
+        "en-ZA",
+        "zu-ZA",
+        "af-ZA"
       ]
     },
     {
@@ -380,14 +390,16 @@
       "playlist_id": 1116190041,
       "locale": [
         "es-ES", 
-        "ca-ES"
+        "ca-ES",
+        "gl-ES",
+        "eu-ES"
       ]
     },
     {
       "name": "Sweden",
       "playlist_id": 1313620305,
       "locale": [
-        "sv-SV"
+        "sv-SE"
       ]
     },
     {
@@ -396,7 +408,9 @@
       "locale": [
         "fr-CH", 
         "de-CH", 
-        "it-CH"
+        "it-CH",
+        "rm-CH",
+        "gsw-CH"
       ]
     },
     {
@@ -425,14 +439,16 @@
       "name": "UK",
       "playlist_id": 1111142221,
       "locale": [
-        "en-GB"
+        "en-GB",
+        "cy-GB"
       ]
     },
     {
       "name": "Ukraine",
       "playlist_id": 1362526495,
       "locale": [
-        "uk-UA"
+        "uk-UA",
+        "ru-UA"
       ]
     },
     {
