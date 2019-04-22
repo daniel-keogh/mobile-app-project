@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SimilarArtistsProvider } from '../../providers/similar-artists/similar-artists';
-
+import { OpenExternallyProvider } from '../../providers/open-externally/open-externally';
 import { ModalController } from 'ionic-angular';
 import { AlbumModalPage } from '../album-modal/album-modal';
 
@@ -24,7 +24,7 @@ export class ArtistInfoPage {
   topAlbums: any = [];
   topTracks: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private similarArtistsProvider: SimilarArtistsProvider, public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private similarArtistsProvider: SimilarArtistsProvider, public modalCtrl: ModalController, private openExternallyProvider: OpenExternallyProvider) {
     this.artist = navParams.get('artist');
   }
 
@@ -99,6 +99,6 @@ export class ArtistInfoPage {
   }
 
   videoSearch(artistName: string, trackName: string) {
-    
+    this.openExternallyProvider.openInYouTube(trackName + " - " + artistName);
   }
 }

@@ -18,8 +18,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { SimilarArtistsProvider } from '../providers/similar-artists/similar-artists';
 import { SearchHistoryProvider } from '../providers/search-history/search-history';
 import { ChartsProvider } from '../providers/charts/charts';
+import { OpenExternallyProvider } from '../providers/open-externally/open-externally';
 
 import { Globalization } from '@ionic-native/globalization';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { Device } from '@ionic-native/device';
+import { AppAvailability } from '@ionic-native/app-availability';
 
 @NgModule({
   declarations: [
@@ -54,7 +58,11 @@ import { Globalization } from '@ionic-native/globalization';
     SimilarArtistsProvider,
     SearchHistoryProvider,
     ChartsProvider,
-    Globalization
+    Globalization,
+    InAppBrowser,
+    Device,
+    AppAvailability,
+    OpenExternallyProvider
   ]
 })
 export class AppModule {}
