@@ -37,6 +37,7 @@ export class OpenExternallyProvider {
           buttons: [
             {
               text: "Go Back",
+              role: 'cancel',
               handler: () => {
                 return;
               }

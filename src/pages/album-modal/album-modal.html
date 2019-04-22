@@ -16,13 +16,24 @@
     </ion-row>
     <br/>
     <ion-row justify-content-center>
-        <p>{{album.name}}</p>
+        <strong>{{album.name}}</strong>
     </ion-row>
     <ion-row justify-content-center>
         <p>{{album.artist}}</p>
     </ion-row>
   </ion-item>
 
+  <br/>
+  <ion-row justify-content-center>
+    <ion-chip>
+      <ion-icon color="secondary" name="musical-note"></ion-icon>
+      <ion-label>{{numListeners}}</ion-label>
+    </ion-chip>
+    <ion-chip>
+      <ion-icon color="secondary" name="play"></ion-icon>
+      <ion-label>{{playcount}}</ion-label>
+    </ion-chip>
+  </ion-row>
   <br/>
   
   <ion-item-group>

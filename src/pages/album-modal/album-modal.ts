@@ -14,6 +14,8 @@ export class AlbumModalPage {
   albumName: string;
   artistName: string;
   albumCover: string;
+  numListeners: any;
+  playcount: any;
   tracklist: any = [];
 
   constructor(public navParams: NavParams, public viewCtrl: ViewController, private similarArtistsProvider: SimilarArtistsProvider, private openExternallyProvider: OpenExternallyProvider) {
@@ -30,6 +32,8 @@ export class AlbumModalPage {
       this.album = data.album;
       this.tracklist = data.album.tracks.track;
       this.albumCover = data.album.image[4]['#text'];
+      this.numListeners = this.abbreviateNumListeners(data.album.listeners);
+      this.playcount = this.abbreviateNumListeners(data.album.playcount);
     });
   }
 
@@ -39,5 +43,27 @@ export class AlbumModalPage {
 
   presentActionSheet(artist: string, track: string) {
     this.openExternallyProvider.presentOpenExternallyActionSheet(artist, track);
+  }
+
+  abbreviateNumListeners(numListeners: any): string {
+    // Based on: https://gist.github.com/tobyjsullivan/96d37ca0216adee20fa95fe1c3eb56ac - tobyjsullivan
+    let newValue = numListeners;
+    const suffixes = ["", "K", "M", "B","T"];  
+    let suffixNum = 0;
+
+    if (numListeners < 1000) {
+      return numListeners;
+    }
+    else {
+      while (newValue >= 1000) {
+        newValue /= 1000;
+        suffixNum++;
+      }
+    
+      newValue = newValue.toPrecision(3);
+      newValue += suffixes[suffixNum];
+
+      return newValue;
+    }
   }
 }
