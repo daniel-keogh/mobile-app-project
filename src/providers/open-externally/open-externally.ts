@@ -6,10 +6,12 @@ import { Device } from '@ionic-native/device';
 import { AppAvailability } from '@ionic-native/app-availability';
 import { Observable } from 'rxjs';
 
+import { ActionSheetController } from 'ionic-angular';
+
 @Injectable()
 export class OpenExternallyProvider {
 
-  constructor(public http: HttpClient, private device: Device, private appAvailability: AppAvailability, private iab: InAppBrowser) {
+  constructor(public http: HttpClient, private device: Device, private appAvailability: AppAvailability, private iab: InAppBrowser, private actionSheetCtrl: ActionSheetController) {
   }
 
   // Based on this answer from eivanov: https://forum.ionicframework.com/t/ionic-opening-external-app/77932/3
@@ -56,5 +58,35 @@ export class OpenExternallyProvider {
 
   searchForDeezerArtist(artistName: string): Observable<any> {
     return this.http.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/artist?q="+ artistName);
+  }
+
+  presentOpenExternallyActionSheet(artist: string, track: string) {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: track,
+      buttons: [
+        {
+          text: "Search Deezer",
+          handler: () => {
+            this.openInDeezer(artist);
+          }
+        },
+        {
+          text: "Search YouTube",
+          handler: () => {
+            this.openInYouTube(track + " - " + artist);
+          }
+        },{
+          text: "Search YouTube Music",
+          handler: () => {
+            this.openInYouTubeMusic(track + " - " + artist);
+          }
+        },{
+          text: "Cancel",
+          role: "cancel",
+          icon: "close"
+        }
+      ]
+    });
+    actionSheet.present();
   }
 }
