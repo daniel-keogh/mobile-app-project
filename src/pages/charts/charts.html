@@ -16,7 +16,7 @@
   <ion-item>
       <ion-label>Country</ion-label>
       <ion-select [(ngModel)]="playlistID" (ionChange)="loadDeezerCharts()">
-          <ion-option value="{{cp.id}}" *ngFor="let cp of countryPlaylists">{{cp.name}}</ion-option>
+          <ion-option value="{{cp.playlist_id}}" *ngFor="let cp of countryPlaylists">{{cp.name}}</ion-option>
       </ion-select>
   </ion-item>
 

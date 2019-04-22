@@ -19,6 +19,7 @@ import { SimilarArtistsProvider } from '../providers/similar-artists/similar-art
 import { SearchHistoryProvider } from '../providers/search-history/search-history';
 import { ChartsProvider } from '../providers/charts/charts';
 
+import { Globalization } from '@ionic-native/globalization';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ChartsProvider } from '../providers/charts/charts';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     SimilarArtistsProvider,
     SearchHistoryProvider,
-    ChartsProvider
+    ChartsProvider,
+    Globalization
   ]
 })
 export class AppModule {}

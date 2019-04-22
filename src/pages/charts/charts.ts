@@ -12,18 +12,21 @@ export class ChartsPage {
 
   topTracks: any = [];
   playlistID: number;
-  countryPlaylists: object;
+  countryPlaylists: any = [];
  
   constructor(public navCtrl: NavController, public navParams: NavParams, public chartsProvider: ChartsProvider, private toastCtrl: ToastController, public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
     this.chartsProvider.getCountries().subscribe((file) => {
-      this.countryPlaylists = file.country_charts.country;
-    });
-    
-    this.playlistID = this.chartsProvider.getDefaultPlaylistID(); 
-    this.loadDeezerCharts();
+      this.countryPlaylists = file.country_charts.country;  
+    }, err => {}, () => {
+      // Search for the users locale and find which playlist to use for the charts.
+      this.chartsProvider.searchForLocale(this.countryPlaylists);
+      this.playlistID = this.chartsProvider.getDefaultPlaylistID(); 
+      
+      this.loadDeezerCharts();
+    }); 
   } 
 
   loadDeezerCharts() {
