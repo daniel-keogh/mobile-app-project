@@ -58,8 +58,7 @@ export class HomePage {
           handler: () => {
             this.viewSearchResults(item);
           }
-        },
-        {
+        },{
           text: "Delete \""+ item + "\"",
           role: "destructive",
           icon: "trash",

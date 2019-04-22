@@ -7,11 +7,12 @@ import { AppAvailability } from '@ionic-native/app-availability';
 import { Observable } from 'rxjs';
 
 import { ActionSheetController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
 
 @Injectable()
 export class OpenExternallyProvider {
 
-  constructor(public http: HttpClient, private device: Device, private appAvailability: AppAvailability, private iab: InAppBrowser, private actionSheetCtrl: ActionSheetController) {
+  constructor(public http: HttpClient, private device: Device, private appAvailability: AppAvailability, private iab: InAppBrowser, private actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
   }
 
   // Based on this answer from eivanov: https://forum.ionicframework.com/t/ionic-opening-external-app/77932/3
@@ -26,16 +27,61 @@ export class OpenExternallyProvider {
       return;
     }
   
-    this.appAvailability.check(app).then(
-      () => { // success callback
+    this.appAvailability.check(app).then(() => {
         this.iab.create(appUrl + path, '_system');
-      },
-      () => { // error callback
-        this.iab.create(httpUrl + path, '_system'); // if the app isn't installed, the default web browser is opened instead.
+      }, () => {
+        // If the app isn't installed, the default web browser is opened instead.
+        const confirm = this.alertCtrl.create({
+          title: "Open in a browser?",
+          message: "It appears that app isn't installed on your device. Do you want to open the link in a browser instead?",
+          buttons: [
+            {
+              text: "Go Back",
+              handler: () => {
+                return;
+              }
+            },{
+              text: "OK",
+              handler: () => {
+                this.iab.create(httpUrl + path, '_system'); 
+              }
+            }
+          ]
+        });
+        confirm.present();
       }
     );
   }
 
+  presentOpenExternallyActionSheet(artist: string, track: string) {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: track +" - "+ artist,
+      buttons: [
+        {
+          text: "Search Deezer",
+          handler: () => {
+            this.openInDeezer(artist);
+          }
+        },{
+          text: "Search YouTube",
+          handler: () => {
+            this.openInYouTube(track + " - " + artist);
+          }
+        },{
+          text: "Search YouTube Music",
+          handler: () => {
+            this.openInYouTubeMusic(track + " - " + artist);
+          }
+        },{
+          text: "Cancel",
+          role: "cancel",
+          icon: "close"
+        }
+      ]
+    });
+    actionSheet.present();
+  }
+  
   // The below functions all work when tested on android. Since i don't have an iOS device, i can't verify if they work there too.
   openInYouTube(searchQuery: string) {
     this.launchExternalApp('youtube://', 'com.google.android.youtube', 'vnd.youtube:///results?search_query=', 'https://www.youtube.com/results?search_query=', searchQuery);
@@ -58,35 +104,5 @@ export class OpenExternallyProvider {
 
   searchForDeezerArtist(artistName: string): Observable<any> {
     return this.http.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/artist?q="+ artistName);
-  }
-
-  presentOpenExternallyActionSheet(artist: string, track: string) {
-    const actionSheet = this.actionSheetCtrl.create({
-      title: track,
-      buttons: [
-        {
-          text: "Search Deezer",
-          handler: () => {
-            this.openInDeezer(artist);
-          }
-        },
-        {
-          text: "Search YouTube",
-          handler: () => {
-            this.openInYouTube(track + " - " + artist);
-          }
-        },{
-          text: "Search YouTube Music",
-          handler: () => {
-            this.openInYouTubeMusic(track + " - " + artist);
-          }
-        },{
-          text: "Cancel",
-          role: "cancel",
-          icon: "close"
-        }
-      ]
-    });
-    actionSheet.present();
   }
 }
