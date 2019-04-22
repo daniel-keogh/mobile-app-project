@@ -24,6 +24,8 @@ import { Globalization } from '@ionic-native/globalization';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Device } from '@ionic-native/device';
 import { AppAvailability } from '@ionic-native/app-availability';
+import { AbbreviateNumbersProvider } from '../providers/abbreviate-numbers/abbreviate-numbers';
+import { SanitiseProvider } from '../providers/sanitise/sanitise';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,9 @@ import { AppAvailability } from '@ionic-native/app-availability';
     InAppBrowser,
     Device,
     AppAvailability,
-    OpenExternallyProvider
+    OpenExternallyProvider,
+    AbbreviateNumbersProvider,
+    SanitiseProvider
   ]
 })
 export class AppModule {}

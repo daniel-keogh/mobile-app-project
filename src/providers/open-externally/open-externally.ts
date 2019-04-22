@@ -5,19 +5,20 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Device } from '@ionic-native/device';
 import { AppAvailability } from '@ionic-native/app-availability';
 import { Observable } from 'rxjs';
-
+import { SanitiseProvider } from '../sanitise/sanitise';
 import { ActionSheetController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 
 @Injectable()
 export class OpenExternallyProvider {
 
-  constructor(public http: HttpClient, private device: Device, private appAvailability: AppAvailability, private iab: InAppBrowser, private actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
+  constructor(public http: HttpClient, private device: Device, private appAvailability: AppAvailability, private iab: InAppBrowser, private actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController, private sanitiseProvider: SanitiseProvider) {
   }
 
   // Based on this answer from eivanov: https://forum.ionicframework.com/t/ionic-opening-external-app/77932/3
   launchExternalApp(iosSchemaName: string, androidPackageName: string, appUrl: string, httpUrl: string, path: string) {
     let app: string;
+
     if (this.device.platform === 'iOS') {
       app = iosSchemaName;
     } else if (this.device.platform === 'Android') {
@@ -85,11 +86,11 @@ export class OpenExternallyProvider {
   
   // The below functions all work when tested on android. Since i don't have an iOS device, i can't verify if they work there too.
   openInYouTube(searchQuery: string) {
-    this.launchExternalApp('youtube://', 'com.google.android.youtube', 'vnd.youtube:///results?search_query=', 'https://www.youtube.com/results?search_query=', searchQuery);
+    this.launchExternalApp('youtube://', 'com.google.android.youtube', 'vnd.youtube:///results?search_query=', 'https://www.youtube.com/results?search_query=', this.sanitiseProvider.makeURLSafe(searchQuery));
   }
 
   openInYouTubeMusic(searchQuery: string) {
-    this.launchExternalApp('youtube.music://', 'com.google.android.apps.youtube.music', 'vnd.youtube.music:///search?q=', 'https://music.youtube.com/search?q=', searchQuery);
+    this.launchExternalApp('youtube.music://', 'com.google.android.apps.youtube.music', 'vnd.youtube.music:///search?q=', 'https://music.youtube.com/search?q=', this.sanitiseProvider.makeURLSafe(searchQuery));
   }
 
   openInDeezer(searchQuery: string) {
@@ -104,6 +105,6 @@ export class OpenExternallyProvider {
   }
 
   searchForDeezerArtist(artistName: string): Observable<any> {
-    return this.http.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/artist?q="+ artistName);
+    return this.http.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/artist?q="+ this.sanitiseProvider.makeURLSafe(artistName));
   }
 }

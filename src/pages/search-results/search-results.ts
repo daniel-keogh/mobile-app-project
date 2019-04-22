@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { ArtistInfoPage } from '../artist-info/artist-info';
 import { SimilarArtistsProvider } from '../../providers/similar-artists/similar-artists'
 import { SearchHistoryProvider } from '../../providers/search-history/search-history';
-
+import { AbbreviateNumbersProvider } from '../../providers/abbreviate-numbers/abbreviate-numbers';
 import { ToastController } from 'ionic-angular';
 
 @IonicPage()
@@ -19,7 +19,7 @@ export class SearchResultsPage {
   artists: any = [];
   noResults: boolean = false;
 
-  constructor(public navCtrl: NavController, private similarArtistsProvider: SimilarArtistsProvider, public navParams: NavParams, private searchHistoryProvider: SearchHistoryProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, private similarArtistsProvider: SimilarArtistsProvider, public navParams: NavParams, private searchHistoryProvider: SearchHistoryProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController, private abbreviateNumbersProvider: AbbreviateNumbersProvider) {
     this.searchQuery = navParams.get('userInput');
     this.saveHistory = navParams.get('saveHistory');
   }
@@ -61,25 +61,7 @@ export class SearchResultsPage {
   }
 
   abbreviateNumListeners(numListeners: any): string {
-    // Based on: https://gist.github.com/tobyjsullivan/96d37ca0216adee20fa95fe1c3eb56ac - tobyjsullivan
-    let newValue = numListeners;
-    const suffixes = ["", "K", "M", "B","T"];  
-    let suffixNum = 0;
-
-    if (numListeners < 1000) {
-      return numListeners;
-    }
-    else {
-      while (newValue >= 1000) {
-        newValue /= 1000;
-        suffixNum++;
-      }
-    
-      newValue = newValue.toPrecision(3);
-      newValue += suffixes[suffixNum];
-
-      return newValue;
-    }
+    return this.abbreviateNumbersProvider.abbreviateNumber(numListeners);
   }
 
   viewArtist(artistName: string) {

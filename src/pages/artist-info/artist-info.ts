@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SimilarArtistsProvider } from '../../providers/similar-artists/similar-artists';
 import { OpenExternallyProvider } from '../../providers/open-externally/open-externally';
+import { SanitiseProvider } from '../../providers/sanitise/sanitise';
 import { ModalController } from 'ionic-angular';
 import { AlbumModalPage } from '../album-modal/album-modal';
 
@@ -24,7 +25,7 @@ export class ArtistInfoPage {
   topAlbums: any = [];
   topTracks: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private similarArtistsProvider: SimilarArtistsProvider, public modalCtrl: ModalController, private openExternallyProvider: OpenExternallyProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private similarArtistsProvider: SimilarArtistsProvider, public modalCtrl: ModalController, private openExternallyProvider: OpenExternallyProvider, private sanitiseProvider: SanitiseProvider) {
     this.artist = navParams.get('artist');
   }
 
@@ -43,8 +44,8 @@ export class ArtistInfoPage {
       this.artistInfo = data.artist;
       this.artistImg = data.artist.image[4]['#text'];
 
-      this.bioContent = this.cleantext(data.artist.bio.content);
-      this.bioSummary = this.cleantext(data.artist.bio.summary);
+      this.bioContent = this.sanitiseProvider.cleanText(data.artist.bio.content);
+      this.bioSummary = this.sanitiseProvider.cleanText(data.artist.bio.summary);
       this.bio = this.bioSummary;
     });
   }
@@ -65,12 +66,6 @@ export class ArtistInfoPage {
     this.similarArtistsProvider.getTopTracks(this.artist).subscribe((data) => {
       this.topTracks = data.toptracks.track;
     });
-  }
-
-  // Removes HTML tags from text.
-  // Source: https://stackoverflow.com/a/5002161
-  cleantext(text: string): string {
-    return text.replace(/<\/?[^>]+(>|$)/g, "");
   }
 
   showMoreLess() {
