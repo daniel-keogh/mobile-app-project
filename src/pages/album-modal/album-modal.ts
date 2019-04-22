@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
-
+import { OpenExternallyProvider } from '../../providers/open-externally/open-externally';
 import { SimilarArtistsProvider } from '../../providers/similar-artists/similar-artists';
+import { ActionSheetController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -16,7 +17,7 @@ export class AlbumModalPage {
   albumCover: string;
   tracklist: any = [];
 
-  constructor(public navParams: NavParams, public viewCtrl: ViewController, private similarArtistsProvider: SimilarArtistsProvider) {
+  constructor(public navParams: NavParams, public viewCtrl: ViewController, private similarArtistsProvider: SimilarArtistsProvider, private openExternallyProvider: OpenExternallyProvider, private actionSheetCtrl: ActionSheetController) {
     this.albumName = navParams.get("albumName");
     this.artistName = navParams.get("artistName");
   }
@@ -35,5 +36,35 @@ export class AlbumModalPage {
 
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+
+  presentActionSheet(artist: string, track: string) {
+    const actionSheet = this.actionSheetCtrl.create({
+      title: track,
+      buttons: [
+        {
+          text: "Search Deezer",
+          handler: () => {
+            this.openExternallyProvider.openInDeezer(artist);
+          }
+        },
+        {
+          text: "Search YouTube",
+          handler: () => {
+            this.openExternallyProvider.openInYouTube(track + " - " + artist);
+          }
+        },{
+          text: "Search YouTube Music",
+          handler: () => {
+            this.openExternallyProvider.openInYouTubeMusic(track + " - " + artist);
+          }
+        },{
+          text: "Cancel",
+          role: "cancel",
+          icon: "close"
+        }
+      ]
+    });
+    actionSheet.present();
   }
 }

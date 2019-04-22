@@ -48,10 +48,7 @@
 
         <ion-item-group>
             <ion-item-divider color="light">Top Tracks</ion-item-divider>
-            <ion-item *ngFor="let track of topTracks; let i = index">
-              <p>{{i + 1}}. {{track.name}}</p>
-              <button ion-button clear item-end (click)="videoSearch(track.artist.name, track.name)"><ion-icon color="danger" name="logo-youtube"></ion-icon></button>
-            </ion-item>
+            <button ion-item *ngFor="let track of topTracks; let i = index" (click)="presentActionSheet(track.artist.name, track.name)">{{i + 1}}. {{track.name}}</button>
         </ion-item-group>
     </div>
   
