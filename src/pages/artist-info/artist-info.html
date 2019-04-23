@@ -16,11 +16,13 @@
           <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>       
             <ion-card>
                 <img src="{{artistImg}}" onerror="this.src='../../assets/imgs/imgNotFound.png'" height="300" width="300"/>
-                <ion-card-content (tap)="showMoreLess()">
+                <ion-card-content>
                   <ion-card-title>{{artistInfo.name}}</ion-card-title>
-                  <p>{{bio}}</p>
-                  <br/>
-                  <button ion-button block outline>{{showTgl}}</button>
+                  <ion-item text-wrap>
+                      <p id="bio" (tap)="showMoreLess($event)">{{bio}}</p>
+                      <br/>
+                      <button ion-button block outline (click)="showMoreLess($event)" >{{showTgl}}</button>
+                  </ion-item>
                 </ion-card-content>
             </ion-card>
           </ion-col>

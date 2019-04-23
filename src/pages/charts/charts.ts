@@ -1,6 +1,7 @@
 import { Component  } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { ChartsProvider } from '../../providers/charts/charts';
+import { OpenExternallyProvider } from '../../providers/open-externally/open-externally';
 import { ArtistInfoPage } from '../artist-info/artist-info';
 
 @IonicPage()
@@ -14,7 +15,7 @@ export class ChartsPage {
   playlistID: number;
   countryPlaylists: any = [];
  
-  constructor(public navCtrl: NavController, public navParams: NavParams, public chartsProvider: ChartsProvider, private toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public chartsProvider: ChartsProvider, private toastCtrl: ToastController, public loadingCtrl: LoadingController, private openExternallyProvider: OpenExternallyProvider ) {
   }
 
   ionViewDidLoad() {
@@ -62,6 +63,10 @@ export class ChartsPage {
       position: "bottom"
     });
     toast.present();
+  }
+
+  openExternally(artist: string, track: string) {
+    this.openExternallyProvider.presentOpenExternallyActionSheet(artist, track);
   }
 
   viewArtist(artist: string) {

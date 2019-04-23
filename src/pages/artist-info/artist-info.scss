@@ -5,4 +5,8 @@ page-artist-info {
         margin-left: auto; 
         margin-right: auto;
     }
+
+    #bio {
+        user-select: text;
+    }
 }

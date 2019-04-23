@@ -23,7 +23,7 @@
   <br/> 
 
   <ion-list>
-    <button ion-item text-wrap (click)="viewArtist(track.artist.name)" *ngFor="let track of topTracks">
+    <button ion-item text-wrap (click)="viewArtist(track.artist.name)" (press)="openExternally(track.artist.name, track.title)" *ngFor="let track of topTracks">
       <ion-avatar item-start>
         <img src="{{track.album.cover_medium}}">
       </ion-avatar>
