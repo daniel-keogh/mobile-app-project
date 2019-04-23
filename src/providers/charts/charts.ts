@@ -10,9 +10,8 @@ const WORLDWIDE_PLAYLIST_ID: number = 3155776842;
 export class ChartsProvider {
 
   usersLocale: any;
-  localePlaylistID: number;
 
-  constructor(public http: HttpClient, private globalization: Globalization) {
+  constructor(private http: HttpClient, private globalization: Globalization) {
     this.getUsersLocale();
   }
 
@@ -25,25 +24,16 @@ export class ChartsProvider {
     return this.http.get("../../assets/country-charts.json"); // read from local JSON file.
   }
 
-  // Return the playlist ID. If the users locale was not found, or there is no matching country then use WORLDWIDE_PLAYLIST_ID by default. 
-  getDefaultPlaylistID(): number { 
-    if (this.localePlaylistID != null)
-        return this.localePlaylistID;
-    else
-        return WORLDWIDE_PLAYLIST_ID;
-  }
-
   // Search the countries array for the users locale and set the playlist id to the associated country if a match is found.
-  searchForLocale(countries: any[]) {
+  getDefaultPlaylistID(countries: any[]): number {
     for (let i = 0; i < countries.length; i++) {
       for (let j = 0; j < countries[i].locale.length; j++) {
         if (countries[i].locale[j] == this.usersLocale) {
-          this.localePlaylistID = countries[i].playlist_id; // locale found, retreive the playlist ID of the matching country. 
-          return;
+          return countries[i].playlist_id; // locale found: retreive the playlist ID of the matching country and use that as the default. 
         }
       }
     }
-    this.localePlaylistID = null;
+    return WORLDWIDE_PLAYLIST_ID; // The users locale was either not found, or there is no matching country.
   }
 
   // Find the users locale using the globalisation plugin.

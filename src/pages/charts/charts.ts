@@ -11,49 +11,50 @@ import { ArtistInfoPage } from '../artist-info/artist-info';
 })
 export class ChartsPage {
 
-  topTracks: any = [];
+  charts: any = [];
+  countries: any = [];
   playlistID: number;
-  countryPlaylists: any = [];
  
-  constructor(public navCtrl: NavController, public navParams: NavParams, public chartsProvider: ChartsProvider, private toastCtrl: ToastController, public loadingCtrl: LoadingController, private openExternallyProvider: OpenExternallyProvider ) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private chartsProvider: ChartsProvider, private toastCtrl: ToastController, private loadingCtrl: LoadingController, private openExternallyProvider: OpenExternallyProvider ) {
   }
 
   ionViewDidLoad() {
     this.chartsProvider.getCountries().subscribe((file) => {
-      this.countryPlaylists = file.country_charts.country;  
-    }, err => {}, () => {
+      this.countries = file.country_charts.country;  
+    }, () => {}, () => {
       // Search for the users locale and find which playlist to use for the charts.
-      this.chartsProvider.searchForLocale(this.countryPlaylists);
-      this.playlistID = this.chartsProvider.getDefaultPlaylistID(); 
-      
-      this.loadDeezerCharts();
+      this.playlistID = this.chartsProvider.getDefaultPlaylistID(this.countries);  
+      this.loadChartInformation();
     }); 
   } 
 
-  loadDeezerCharts() {
+  loadChartInformation() {
     const loader = this.loadingCtrl.create({
       content: "Loading..."
     });
     loader.present();
 
     this.chartsProvider.getCharts(this.playlistID).subscribe((data) => {
-      this.topTracks = data.data;
-      loader.dismiss();
-    }, err => {
-      loader.dismiss();
+      this.charts = data.data;
+    }, () => {
       this.refreshFailedToast();
+      loader.dismiss();
+    }, () => {
+      loader.dismiss();
     });
   }
 
   refreshCharts(refresher) {
     setTimeout(() => {
       this.chartsProvider.getCharts(this.playlistID).subscribe((data) => {
-        this.topTracks = data.data;
-      }, err => {
+        this.charts = data.data;
+      }, () => {
         this.refreshFailedToast();
+        refresher.complete();
+      }, () => {
+        refresher.complete();
       });
-      refresher.complete();
-    }, 2000);
+    });
   }
 
   refreshFailedToast() {
