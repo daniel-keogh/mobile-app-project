@@ -2,9 +2,7 @@
   <ion-navbar>
     <ion-title>{{albumName}}</ion-title>
     <ion-buttons start>
-        <button ion-button (click)="dismiss()">
-          Close
-        </button>
+        <button ion-button (click)="dismiss()">Close</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -16,7 +14,7 @@
     </ion-row>
     <br/>
     <ion-row justify-content-center>
-        <strong>{{album.name}}</strong>
+        <label>{{album.name}}</label>
     </ion-row>
     <ion-row justify-content-center>
         <p>{{album.artist}}</p>
@@ -39,7 +37,7 @@
   <ion-item-group>
       <ion-item-divider color="light">Track Listing</ion-item-divider>
       <ion-item *ngFor="let track of tracklist; let i = index">
-        <button ion-item (click)="presentActionSheet(track.artist.name, track.name)">{{i + 1}}. {{track.name}}</button>
+        <button ion-item text-wrap (click)="presentActionSheet(track.artist.name, track.name)">{{i + 1}}. {{track.name}}</button>
       </ion-item>
   </ion-item-group>
 </ion-content>

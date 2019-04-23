@@ -5,17 +5,17 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-refresher (ionRefresh)="refreshCharts($event)">
+  <ion-refresher class="refresher" (ionRefresh)="refreshCharts($event)">
       <ion-refresher-content
-          pullingIcon="arrow-dropdown"
+          pullingIcon="refresh-circle"
           pullingText="Pull to refresh"
           refreshingText="Refreshing...">
       </ion-refresher-content>
   </ion-refresher>
 
   <ion-item>
-      <ion-label>Country</ion-label>
-      <ion-select [(ngModel)]="playlistID" (ionChange)="loadDeezerCharts()">
+      <ion-label>Select a Country</ion-label>
+      <ion-select interface="action-sheet" [(ngModel)]="playlistID" (ionChange)="loadDeezerCharts()">
           <ion-option value="{{cp.playlist_id}}" *ngFor="let cp of countryPlaylists">{{cp.name}}</ion-option>
       </ion-select>
   </ion-item>

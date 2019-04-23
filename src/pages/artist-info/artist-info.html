@@ -36,7 +36,7 @@
                   <ion-card id="album-card" (tap)="viewAlbum(album.name)">
                     <img src="{{album.image[3]['#text']}}" onerror="this.src='../../assets/imgs/imgNotFound.png'">
                     <ion-card-content>
-                      <p>{{album.name}}</p>
+                      <label>{{album.name}}</label>
                     </ion-card-content>
                   </ion-card>
                   <br/>
@@ -48,7 +48,7 @@
 
         <ion-item-group>
             <ion-item-divider color="light">Top Tracks</ion-item-divider>
-            <button ion-item *ngFor="let track of topTracks; let i = index" (click)="presentActionSheet(track.artist.name, track.name)">{{i + 1}}. {{track.name}}</button>
+            <button ion-item text-wrap *ngFor="let track of topTracks; let i = index" (click)="presentActionSheet(track.artist.name, track.name)">{{i + 1}}. {{track.name}}</button>
         </ion-item-group>
     </div>
   

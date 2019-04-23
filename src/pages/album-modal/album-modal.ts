@@ -38,11 +38,11 @@ export class AlbumModalPage {
     });
   }
 
-  dismiss() {
-    this.viewCtrl.dismiss();
-  }
-
   presentActionSheet(artist: string, track: string) {
     this.openExternallyProvider.presentOpenExternallyActionSheet(artist, track);
+  }
+  
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 }

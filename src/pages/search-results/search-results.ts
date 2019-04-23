@@ -24,13 +24,14 @@ export class SearchResultsPage {
     this.saveHistory = navParams.get('saveHistory');
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     this.loadResults();
   }
 
   loadResults() {
     const loader = this.loadingCtrl.create({
       content: "Loading...",
+      dismissOnPageChange: true
     });
     loader.present();
 
@@ -73,7 +74,7 @@ export class SearchResultsPage {
   viewSearchResults(userInput: string) {
     if (userInput != "") {
       this.searchQuery = userInput;
-      this.ionViewDidLoad();
+      this.loadResults();
       
       // add the item to search history
       if (this.saveHistory)
