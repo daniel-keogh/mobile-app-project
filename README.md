@@ -27,3 +27,6 @@ Some Ionic Native plugins are used to give the app more functionality:
 - [Device](https://github.com/apache/cordova-plugin-device)
 - [In App Browser](https://github.com/apache/cordova-plugin-inappbrowser)
 - [Globalisation](https://github.com/apache/cordova-plugin-globalization)
+
+# License
+GPL v.3
