@@ -1,5 +1,9 @@
 page-search-results {
-    .no-results p {
-        display: inline;
+    .no-results {
+        text-align: center;
+    }
+
+    .no-results label {
+        padding-left: 5px;
     }
 }

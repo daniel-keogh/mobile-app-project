@@ -12,7 +12,7 @@ export class SanitiseProvider {
     return text.replace(/<\/?[^>]+(>|$)/g, "");
   }
 
-  // Make the text URL safe (remove spaces with '+' etc.).
+  // makes sure text entered by the user is OK before attaching it to a URL, by removing whitespace and it replacing with '+'.
   makeURLSafe(text: string): string {
     text = text.replace(/  +/g, ' ');
     text = text.split(' ').join('+');

@@ -9,7 +9,7 @@ const WORLDWIDE_PLAYLIST_ID: number = 3155776842;
 @Injectable()
 export class ChartsProvider {
 
-  usersLocale: any;
+  private usersLocale: any;
 
   constructor(private http: HttpClient, private globalization: Globalization) {
     this.getUsersLocale();
@@ -17,7 +17,7 @@ export class ChartsProvider {
 
   getCharts(playlistID: number): Observable<any> {
     // This URL prevents the blocking of Cross-Origin Requests
-    return this.http.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/"+ playlistID +"/tracks&limit=50");
+    return this.http.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/playlist/"+ playlistID +"/tracks&limit=100");
   }
 
   getCountries(): Observable<any> {

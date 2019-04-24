@@ -19,13 +19,13 @@ import { SimilarArtistsProvider } from '../providers/similar-artists/similar-art
 import { SearchHistoryProvider } from '../providers/search-history/search-history';
 import { ChartsProvider } from '../providers/charts/charts';
 import { OpenExternallyProvider } from '../providers/open-externally/open-externally';
+import { AbbreviateNumbersProvider } from '../providers/abbreviate-numbers/abbreviate-numbers';
+import { SanitiseProvider } from '../providers/sanitise/sanitise';
 
 import { Globalization } from '@ionic-native/globalization';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Device } from '@ionic-native/device';
 import { AppAvailability } from '@ionic-native/app-availability';
-import { AbbreviateNumbersProvider } from '../providers/abbreviate-numbers/abbreviate-numbers';
-import { SanitiseProvider } from '../providers/sanitise/sanitise';
 
 @NgModule({
   declarations: [

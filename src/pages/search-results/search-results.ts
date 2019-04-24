@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { ArtistInfoPage } from '../artist-info/artist-info';
 import { SimilarArtistsProvider } from '../../providers/similar-artists/similar-artists'
 import { SearchHistoryProvider } from '../../providers/search-history/search-history';
 import { AbbreviateNumbersProvider } from '../../providers/abbreviate-numbers/abbreviate-numbers';
-import { ToastController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -17,11 +16,11 @@ export class SearchResultsPage {
   searchQuery: string;
   saveHistory: boolean;
   artists: any = [];
-  noResults: boolean = false;
+  noResults: boolean;
 
   constructor(public navCtrl: NavController, private similarArtistsProvider: SimilarArtistsProvider, public navParams: NavParams, private searchHistoryProvider: SearchHistoryProvider, public toastCtrl: ToastController, public loadingCtrl: LoadingController, private abbreviateNumbersProvider: AbbreviateNumbersProvider) {
     this.searchQuery = navParams.get('userInput');
-    this.saveHistory = navParams.get('saveHistory');
+    this.saveHistory = navParams.get('saveHistory'); // get the value of the toggle on the home page (for storing searches on this page)
   }
 
   ionViewDidEnter() {
@@ -33,31 +32,32 @@ export class SearchResultsPage {
       content: "Loading...",
       dismissOnPageChange: true
     });
-    loader.present();
+    
+    loader.present().then(() => {
+      this.similarArtistsProvider.getSearchResults(this.searchQuery).subscribe((data) => {
+        this.artists = data.results.artistmatches.artist;
 
-    this.similarArtistsProvider.getSearchResults(this.searchQuery).subscribe((data) => {
-      this.artists = data.results.artistmatches.artist;
-      loader.dismiss();
-
-      if (this.artists == "") {
-        this.noResults = true;
-        this.presentToast();
-      }
-      else {
-        this.noResults = false;
-      }
-    }, err => {
-      loader.dismiss();
-      this.noResults = true;
-      this.presentToast();
+        if (this.artists == "") {
+          this.presentNoResultsFoundToast();
+        }
+        else {
+          this.noResults = false;
+        }
+      }, () => {
+        loader.dismiss();
+        this.presentNoResultsFoundToast();
+      }, () => {
+        loader.dismiss();
+      });
     });
   }
 
-  presentToast() {
+  presentNoResultsFoundToast() {
     let toast = this.toastCtrl.create({
       message: "No results found for \""+ this.searchQuery +"\".",
       duration: 3000,
     });
+    this.noResults = true;
     toast.present();
   }
 
@@ -74,7 +74,7 @@ export class SearchResultsPage {
   viewSearchResults(userInput: string) {
     if (userInput != "") {
       this.searchQuery = userInput;
-      this.loadResults();
+      this.loadResults(); // search for the new query
       
       // add the item to search history
       if (this.saveHistory)

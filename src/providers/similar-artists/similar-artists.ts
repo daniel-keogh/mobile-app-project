@@ -6,15 +6,11 @@ import { SanitiseProvider } from '../sanitise/sanitise';
 @Injectable()
 export class SimilarArtistsProvider {
 
-  constructor(public http: HttpClient, private sanitiseProvider: SanitiseProvider) {
+  constructor(private http: HttpClient, private sanitiseProvider: SanitiseProvider) {
   }
 
   getSearchResults(searchQuery : string) : Observable<any> {
-    const limit: number = 25;
-
-    searchQuery = this.sanitiseProvider.makeURLSafe(searchQuery);
-
-    return this.http.get('https://ws.audioscrobbler.com/2.0/?method=artist.search&limit='+ limit +'&api_key=05474453d4140db7fad8d7eee652eee3&format=json&artist=' + searchQuery);
+    return this.http.get('https://ws.audioscrobbler.com/2.0/?method=artist.search&limit=25&api_key=05474453d4140db7fad8d7eee652eee3&format=json&artist=' + this.sanitiseProvider.makeURLSafe(searchQuery));
   }
 
   getArtistInfo(artist: string): Observable<any> {
@@ -26,7 +22,7 @@ export class SimilarArtistsProvider {
   }
 
   getTopAlbums(artist: string): Observable<any> { 
-    return this.http.get("https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist="+ artist +"&api_key=05474453d4140db7fad8d7eee652eee3&limit=5&format=json")
+    return this.http.get("https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist="+ artist +"&api_key=05474453d4140db7fad8d7eee652eee3&limit=6&format=json")
   }
 
   getAlbumInfo(album: string, artist: string): Observable<any> {
@@ -34,6 +30,6 @@ export class SimilarArtistsProvider {
   }
 
   getSimilar(artist: string): Observable<any> {
-    return this.http.get("https://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist="+ artist +"&api_key=05474453d4140db7fad8d7eee652eee3&limit=20&format=json");
+    return this.http.get("https://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist="+ artist +"&api_key=05474453d4140db7fad8d7eee652eee3&limit=25&format=json");
   }
 }

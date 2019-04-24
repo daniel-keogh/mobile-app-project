@@ -1,24 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { Observable } from 'rxjs';
+import { SanitiseProvider } from '../sanitise/sanitise';
+import { ActionSheetController, AlertController } from 'ionic-angular';
+
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { Device } from '@ionic-native/device';
 import { AppAvailability } from '@ionic-native/app-availability';
-import { Observable } from 'rxjs';
-import { SanitiseProvider } from '../sanitise/sanitise';
-import { ActionSheetController } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
 
 @Injectable()
 export class OpenExternallyProvider {
 
-  constructor(public http: HttpClient, private device: Device, private appAvailability: AppAvailability, private iab: InAppBrowser, private actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController, private sanitiseProvider: SanitiseProvider) {
+  constructor(private http: HttpClient, private device: Device, private appAvailability: AppAvailability, private iab: InAppBrowser, private actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController, private sanitiseProvider: SanitiseProvider) {
   }
 
   // Based on this answer from eivanov: https://forum.ionicframework.com/t/ionic-opening-external-app/77932/3
   launchExternalApp(iosSchemaName: string, androidPackageName: string, appUrl: string, httpUrl: string, path: string) {
     let app: string;
 
+    // Find what platform the device is on
     if (this.device.platform === 'iOS') {
       app = iosSchemaName;
     } else if (this.device.platform === 'Android') {
@@ -27,17 +28,17 @@ export class OpenExternallyProvider {
       this.iab.create(httpUrl + path, '_system');
       return;
     }
-  
+
     this.appAvailability.check(app).then(() => {
         this.iab.create(appUrl + path, '_system');
       }, () => {
-        // If the app isn't installed, the default web browser is opened instead.
+        // If the app isn't installed, prompt to open the default web browser instead.
         const confirm = this.alertCtrl.create({
           title: "Open in a browser?",
-          message: "It appears that app isn't installed on your device. Do you want to open the link in a browser instead?",
+          message: "It appears "+ this.getAppName(app) +" isn't installed on your device. Do you want to open the link in a browser instead?",
           buttons: [
             {
-              text: "Go Back",
+              text: "No",
               role: 'cancel',
               handler: () => {
                 return;
@@ -62,7 +63,8 @@ export class OpenExternallyProvider {
         {
           text: "Search Deezer",
           handler: () => {
-            this.openInDeezer(artist);
+            let searchQuery: string = 'artist:"'+ this.sanitiseProvider.makeURLSafe(artist) +'"track:"'+ this.sanitiseProvider.makeURLSafe(track) +'"';
+            this.openInDeezer(searchQuery);
           }
         },{
           text: "Search YouTube",
@@ -84,27 +86,42 @@ export class OpenExternallyProvider {
     actionSheet.present();
   }
   
-  // The below functions all work when tested on android. Since i don't have an iOS device, i can't verify if they work there too.
-  openInYouTube(searchQuery: string) {
+  private getAppName(app: string): string {
+    switch(app) {
+      case "deezer.android.app":
+      case "deezer://":
+        return "Deezer";
+      case "com.google.android.youtube":
+      case "youtube://":
+        return "YouTube";
+      case "com.google.android.apps.youtube.music":
+      case "youtube.music://":
+        return "YouTube Music";
+      default:
+        return null;
+    }
+  }
+  
+  private openInYouTube(searchQuery: string) {
     this.launchExternalApp('youtube://', 'com.google.android.youtube', 'vnd.youtube:///results?search_query=', 'https://www.youtube.com/results?search_query=', this.sanitiseProvider.makeURLSafe(searchQuery));
   }
 
-  openInYouTubeMusic(searchQuery: string) {
+  private openInYouTubeMusic(searchQuery: string) {
     this.launchExternalApp('youtube.music://', 'com.google.android.apps.youtube.music', 'vnd.youtube.music:///search?q=', 'https://music.youtube.com/search?q=', this.sanitiseProvider.makeURLSafe(searchQuery));
   }
 
-  openInDeezer(searchQuery: string) {
+  private openInDeezer(searchQuery: string) {
     let id: any;
 
-    this.searchForDeezerArtist(searchQuery).subscribe((results) => {
-      id = results.data[0].id;
+    this.searchForDeezerTrack(searchQuery).subscribe((results) => {
+      id = results.data[0].id; // get the id of the track
     }, () => {
     }, () => {
-      this.launchExternalApp('deezer://', 'deezer.android.app', 'deezer://www.deezer.com/artist/', 'https://www.deezer.com/artist/', id);
+      this.launchExternalApp('deezer://', 'deezer.android.app', 'deezer://www.deezer.com/track/', 'https://www.deezer.com/track/', id);
     });
   }
 
-  searchForDeezerArtist(artistName: string): Observable<any> {
-    return this.http.get("https://cors-anywhere.herokuapp.com/https://api.deezer.com/search/artist?q="+ this.sanitiseProvider.makeURLSafe(artistName));
+  private searchForDeezerTrack(searchQuery: string): Observable<any> {
+    return this.http.get('https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q='+ searchQuery);
   }
 }

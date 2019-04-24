@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { HomePage } from '../home/home';
 import { ChartsPage } from '../charts/charts';
 
@@ -13,7 +12,5 @@ export class TabsPage {
   chartsTabRoot = ChartsPage;
 
   constructor() {
-    
   }
-
 }

@@ -23,12 +23,20 @@
   <br/> 
 
   <ion-list>
-    <button ion-item text-wrap (click)="viewArtist(track.artist.name)" (press)="openExternally(track.artist.name, track.title)" *ngFor="let track of charts">
+    <button ion-item text-wrap (click)="viewArtist(track.artist.name)" (press)="showActionSheet(track.artist.name, track.title)" *ngFor="let track of charts">
       <ion-avatar item-start>
-        <img src="{{track.album.cover_medium}}">
+        <img src="{{track.album.cover_medium}}" onerror="this.src='../../assets/imgs/placeholder.png'">
       </ion-avatar>
       <h2>{{track.title}}</h2>
       <p>{{track.artist.name}}</p>
     </button>
+
+    <br/>
+    
+    <!-- Since Deezer say i have to show their logo if i wanna use their stuff: https://developers.deezer.com/guidelines/logo -->
+    <ion-item id="logo" [hidden]="chartsNotLoaded">
+      <img src="../../assets/imgs/deezer-logo.png"/>
+    </ion-item>
   </ion-list>
+
 </ion-content>

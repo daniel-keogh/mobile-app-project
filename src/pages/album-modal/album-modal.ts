@@ -32,7 +32,8 @@ export class AlbumModalPage {
     this.album = this.similarArtistsProvider.getAlbumInfo(this.albumName, this.artistName).subscribe((data) => {
       this.album = data.album;
       this.tracklist = data.album.tracks.track;
-      this.albumCover = data.album.image[4]['#text'];
+      // use the higher quality image if possible
+      this.albumCover = (data.album.image[5]['#text'] != "") ? this.albumCover = data.album.image[5]['#text'] : this.albumCover = data.album.image[4]['#text'];
       this.numListeners = this.abbreviateNumbersProvider.abbreviateNumber(data.album.listeners);
       this.playcount = this.abbreviateNumbersProvider.abbreviateNumber(data.album.playcount);
     });

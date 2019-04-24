@@ -14,11 +14,14 @@ export class ChartsPage {
   charts: any = [];
   countries: any = [];
   playlistID: number;
+  chartsNotLoaded: boolean;
  
   constructor(public navCtrl: NavController, public navParams: NavParams, private chartsProvider: ChartsProvider, private toastCtrl: ToastController, private loadingCtrl: LoadingController, private openExternallyProvider: OpenExternallyProvider ) {
   }
 
   ionViewDidLoad() {
+    this.chartsNotLoaded = true;
+    // Get the list of countries for the select component from a local JSON file
     this.chartsProvider.getCountries().subscribe((file) => {
       this.countries = file.country_charts.country;  
     }, () => {}, () => {
@@ -32,18 +35,21 @@ export class ChartsPage {
     const loader = this.loadingCtrl.create({
       content: "Loading..."
     });
-    loader.present();
-
-    this.chartsProvider.getCharts(this.playlistID).subscribe((data) => {
-      this.charts = data.data;
-    }, () => {
-      this.refreshFailedToast();
-      loader.dismiss();
-    }, () => {
-      loader.dismiss();
+    
+    loader.present().then(() => {
+      this.chartsProvider.getCharts(this.playlistID).subscribe((data) => {
+        this.charts = data.data;
+      }, () => {
+        this.refreshFailedToast();
+        loader.dismiss();
+      }, () => {
+        this.chartsNotLoaded = false;
+        loader.dismiss();
+      });
     });
   }
 
+  // pull to refresh
   refreshCharts(refresher) {
     setTimeout(() => {
       this.chartsProvider.getCharts(this.playlistID).subscribe((data) => {
@@ -52,21 +58,24 @@ export class ChartsPage {
         this.refreshFailedToast();
         refresher.complete();
       }, () => {
+        this.chartsNotLoaded = false;
         refresher.complete();
       });
     });
   }
 
+  // displayed if charts fail to load
   refreshFailedToast() {
     let toast = this.toastCtrl.create({
       message: "Failed to load charts.",
       duration: 3000,
       position: "bottom"
     });
+    this.chartsNotLoaded = true;
     toast.present();
   }
 
-  openExternally(artist: string, track: string) {
+  showActionSheet(artist: string, track: string) {
     this.openExternallyProvider.presentOpenExternallyActionSheet(artist, track);
   }
 

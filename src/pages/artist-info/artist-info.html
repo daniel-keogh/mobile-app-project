@@ -11,18 +11,14 @@
   </ion-segment>
 
   <div [ngSwitch]="segment">
-    <div *ngSwitchCase="'thisArtist'">
+    <div *ngSwitchCase="'thisArtist'" [hidden]="loadFailed">
         <ion-row justify-content-center>
           <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3>       
             <ion-card>
-                <img src="{{artistImg}}" onerror="this.src='../../assets/imgs/imgNotFound.png'" height="300" width="300"/>
+                <img src="{{artistImg}}" onerror="this.src='../../assets/imgs/artist-placeholder.png'" height="300" width="300"/>
                 <ion-card-content>
                   <ion-card-title>{{artistInfo.name}}</ion-card-title>
-                  <ion-item text-wrap>
-                      <p id="bio" (tap)="showMoreLess($event)">{{bio}}</p>
-                      <br/>
-                      <button ion-button block outline (click)="showMoreLess($event)" >{{showTgl}}</button>
-                  </ion-item>
+                  <button ion-item text-wrap id="bio" (click)="showMoreLess()">{{bio}}</button>
                 </ion-card-content>
             </ion-card>
           </ion-col>
@@ -36,7 +32,7 @@
                 <ion-slide *ngFor="let album of topAlbums">
                   <br/>
                   <ion-card id="album-card" (tap)="viewAlbum(album.name)">
-                    <img src="{{album.image[3]['#text']}}" onerror="this.src='../../assets/imgs/imgNotFound.png'">
+                    <img src="{{album.image[3]['#text']}}" onerror="this.src='../../assets/imgs/album-placeholder.png'">
                     <ion-card-content>
                       <label>{{album.name}}</label>
                     </ion-card-content>
@@ -58,13 +54,10 @@
       <ion-row justify-content-center>
         <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 *ngFor="let similarArtist of similarArtists">
           <ion-card>
-            <img src="{{similarArtist.image[4]['#text']}}" onerror="this.src='../../assets/imgs/imgNotFound.png'" height="300" width="300"/>
-
+            <img src="{{similarArtist.image[4]['#text']}}" onerror="this.src='../../assets/imgs/placeholder.png'" height="300" width="300"/>
             <ion-card-content>
               <ion-card-title>{{similarArtist.name}}</ion-card-title>
-              <button ion-button icon-end block (click)="viewArtist(similarArtist.name)" class="view-artist">
-                  View
-                  <ion-icon name="arrow-forward"></ion-icon> 
+              <button ion-button icon-end block (click)="viewArtist(similarArtist.name)" class="view-artist">View<ion-icon name="arrow-forward"></ion-icon> 
               </button>
             </ion-card-content>
           </ion-card>

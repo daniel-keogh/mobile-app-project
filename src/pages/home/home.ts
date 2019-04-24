@@ -21,19 +21,22 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
-    this.searchHistory = this.searchHistoryProvider.loadSearchHistory();
+    this.searchHistory = this.searchHistoryProvider.loadSearchHistory(); // retrieve search history from local storage
     
+    // retrieve the setting of the toggle from storage
     this.storage.get(HISTORY_TOGGLE_KEY).then((option) => {
       this.saveHistory = (option == false) ? false : true;
     });
   }
 
   ionViewDidLeave() {
+    // Save the search to hisory after leaving the view
     if (this.saveHistory && this.searchQuery != null)
       this.searchHistoryProvider.addItemToHistory(this.searchQuery);
   }
 
   viewSearchResults(userInput : string) {
+    // only leave if the search bar isn't empty
     if (userInput != "") {
       this.navCtrl.push(SearchResultsPage, {
         userInput : userInput.trim(),
@@ -48,6 +51,7 @@ export class HomePage {
     this.searchHistoryProvider.deleteHistoryItem(item);
   }
   
+  // displayed when long pressing on a history entry
   presentActionSheet(item: string) {
     const actionSheet = this.actionSheetCtrl.create({
       title: item,

@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { SimilarArtistsProvider } from '../../providers/similar-artists/similar-artists';
 import { OpenExternallyProvider } from '../../providers/open-externally/open-externally';
 import { SanitiseProvider } from '../../providers/sanitise/sanitise';
-import { ModalController } from 'ionic-angular';
 import { AlbumModalPage } from '../album-modal/album-modal';
 
 @IonicPage()
@@ -20,65 +19,83 @@ export class ArtistInfoPage {
   bio: any;
   bioSummary: any = [];
   bioContent: any = [];
-  showTgl: string;
   similarArtists: any = [];
   topAlbums: any = [];
   topTracks: any = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private similarArtistsProvider: SimilarArtistsProvider, public modalCtrl: ModalController, private openExternallyProvider: OpenExternallyProvider, private sanitiseProvider: SanitiseProvider) {
+  loadFailed: boolean;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, private similarArtistsProvider: SimilarArtistsProvider, public modalCtrl: ModalController, public alertCtrl: AlertController, private openExternallyProvider: OpenExternallyProvider, private sanitiseProvider: SanitiseProvider) {
     this.artist = navParams.get('artist');
   }
 
   ionViewDidLoad() {
     this.segment = "thisArtist";
-    this.showTgl = "Show More";
-
     this.loadArtistInfo();
-    this.loadTopAlbums();
-    this.loadTopTracks();
-    this.loadSimilarArtists();
   }
 
   loadArtistInfo() {
     this.similarArtistsProvider.getArtistInfo(this.artist).subscribe((data) => {
-      this.artistInfo = data.artist;
-      this.artistImg = data.artist.image[4]['#text'];
 
-      this.bioContent = this.sanitiseProvider.cleanText(data.artist.bio.content);
-      this.bioSummary = this.sanitiseProvider.cleanText(data.artist.bio.summary);
-      this.bio = this.bioSummary;
+      if (data.artist != undefined) {
+        this.artistInfo = data.artist;
+        this.artistImg = data.artist.image[4]['#text'];
+  
+        this.bioContent = this.sanitiseProvider.cleanText(data.artist.bio.content);
+        this.bioSummary = this.sanitiseProvider.cleanText(data.artist.bio.summary);
+        this.bio = this.bioSummary;
+
+        this.loadTopAlbums();
+        this.loadTopTracks();
+        this.loadSimilarArtists();
+
+        this.loadFailed = false;
+      }
+      else {
+        this.loadFailed = true;
+        this.failureToLoadAlert();
+      }
     });
   }
 
   loadSimilarArtists() {
     this.similarArtistsProvider.getSimilar(this.artist).subscribe((data) => {
-      this.similarArtists = data.similarartists.artist;
+        this.similarArtists = data.similarartists.artist;
     });
   }
 
   loadTopAlbums() {
     this.similarArtistsProvider.getTopAlbums(this.artist).subscribe((data) => {
-      this.topAlbums = data.topalbums.album;
+        this.topAlbums = data.topalbums.album;
     });
   }
 
   loadTopTracks() {
     this.similarArtistsProvider.getTopTracks(this.artist).subscribe((data) => {
-      this.topTracks = data.toptracks.track;
+        this.topTracks = data.toptracks.track;
     });
   }
 
-  showMoreLess() {
-    if (this.bio == this.bioSummary) {
-      this.bio = this.bioContent;
-      this.showTgl = "Show Less";
-    }
-    else {
-      this.bio = this.bioSummary;
-      this.showTgl = "Show More";
-    }
+  failureToLoadAlert() {
+    const alert = this.alertCtrl.create({
+      title: "Error",
+      subTitle: "Failed to find any information about this artist.",
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {this.navCtrl.pop();} // leave the current page
+        }
+      ]
+    });
+    alert.present();
   }
 
+  // show more or less text each time the button is clicked
+  showMoreLess() {
+    this.bio = (this.bio == this.bioSummary) ? this.bioContent : this.bioSummary;
+  }
+
+  // Open a modal page to see more info about the album
   viewAlbum(album: string) {
     const modal = this.modalCtrl.create(AlbumModalPage, {
       artistName : this.artist,

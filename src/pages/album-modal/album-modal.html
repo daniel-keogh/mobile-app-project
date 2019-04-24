@@ -9,35 +9,27 @@
 
 <ion-content padding>
   <ion-item class="album-summary">
-    <ion-row justify-content-center>
-      <img src={{albumCover}} onerror="this.src='../../assets/imgs/imgNotFound.png'"/>
-    </ion-row>
-    <br/>
-    <ion-row justify-content-center>
-        <label>{{album.name}}</label>
-    </ion-row>
-    <ion-row justify-content-center>
-        <p>{{album.artist}}</p>
-    </ion-row>
+    <img src={{albumCover}} onerror="this.src='../../assets/imgs/album-placeholder.png'"/>
+    <br/><br/>
+    <label>{{album.name}}</label>
+    <p>{{album.artist}}</p>
   </ion-item>
 
   <br/>
-  <ion-row justify-content-center>
+  <div class="chips">
     <ion-chip>
-      <ion-icon color="secondary" name="musical-note"></ion-icon>
+      <ion-icon color="secondary" name="headset"></ion-icon>
       <ion-label>{{numListeners}}</ion-label>
     </ion-chip>
     <ion-chip>
       <ion-icon color="secondary" name="play"></ion-icon>
       <ion-label>{{playcount}}</ion-label>
     </ion-chip>
-  </ion-row>
+  </div>
   <br/>
   
   <ion-item-group>
       <ion-item-divider color="light">Track Listing</ion-item-divider>
-      <ion-item *ngFor="let track of tracklist; let i = index">
-        <button ion-item text-wrap (click)="presentActionSheet(track.artist.name, track.name)">{{i + 1}}. {{track.name}}</button>
-      </ion-item>
+      <button ion-item text-wrap *ngFor="let track of tracklist; let i = index" (click)="presentActionSheet(track.artist.name, track.name)">{{i + 1}}. {{track.name}}</button>
   </ion-item-group>
 </ion-content>

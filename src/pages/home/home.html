@@ -20,6 +20,7 @@
   
   <br/>
 
+  <!-- Search history list -->
   <ion-list *ngIf="saveHistory">
     <ion-item-sliding *ngFor="let item of searchHistory" class="history-item-list">
       <button ion-item (click)="viewSearchResults(item)" (press)="presentActionSheet(item)">{{item}}</button>
@@ -33,7 +34,7 @@
           <button ion-button color="danger" (click)="deleteHistoryItem(item)">
               <ion-icon name="trash"></ion-icon>Delete
           </button>
-        </ion-item-options>
+      </ion-item-options>
     </ion-item-sliding>
   </ion-list>
 </ion-content>
