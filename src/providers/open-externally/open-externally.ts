@@ -19,9 +19,9 @@ export class OpenExternallyProvider {
     let app: string;
 
     // Find what platform the device is on
-    if (this.device.platform === 'iOS') {
+    if (this.device.platform == 'iOS') {
       app = iosSchemaName;
-    } else if (this.device.platform === 'Android') {
+    } else if (this.device.platform == 'Android') {
       app = androidPackageName;
     } else {
       this.iab.create(httpUrl + path, '_system');
@@ -121,6 +121,6 @@ export class OpenExternallyProvider {
   }
 
   private searchForDeezerTrack(searchQuery: string): Observable<any> {
-    return this.http.get('https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q='+ searchQuery);
+    return this.http.get('https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q='+ searchQuery +'.json');
   }
 }
