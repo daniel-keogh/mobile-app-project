@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { SimilarArtistsProvider } from '../../providers/similar-artists/similar-artists';
 import { OpenExternallyProvider } from '../../providers/open-externally/open-externally';
-import { SanitiseProvider } from '../../providers/sanitise/sanitise';
 import { AlbumModalPage } from '../album-modal/album-modal';
 
 @IonicPage()
@@ -25,7 +24,7 @@ export class ArtistInfoPage {
 
   loadFailed: boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private similarArtistsProvider: SimilarArtistsProvider, public modalCtrl: ModalController, public alertCtrl: AlertController, private openExternallyProvider: OpenExternallyProvider, private sanitiseProvider: SanitiseProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private similarArtistsProvider: SimilarArtistsProvider, public modalCtrl: ModalController, public alertCtrl: AlertController, private openExternallyProvider: OpenExternallyProvider) {
     this.artist = navParams.get('artist');
   }
 
@@ -41,8 +40,8 @@ export class ArtistInfoPage {
         this.artistInfo = data.artist;
         this.artistImg = data.artist.image[4]['#text'];
   
-        this.bioContent = this.sanitiseProvider.cleanText(data.artist.bio.content);
-        this.bioSummary = this.sanitiseProvider.cleanText(data.artist.bio.summary);
+        this.bioContent = this.cleanText(data.artist.bio.content);
+        this.bioSummary = this.cleanText(data.artist.bio.summary);
         this.bio = this.bioSummary;
 
         this.loadTopAlbums();
@@ -93,6 +92,12 @@ export class ArtistInfoPage {
   // show more or less text each time the button is clicked
   showMoreLess() {
     this.bio = (this.bio == this.bioSummary) ? this.bioContent : this.bioSummary;
+  }
+
+  // Removes HTML tags from text.
+  // Source: https://stackoverflow.com/a/5002161
+  cleanText(text: string): string {
+    return text.replace(/<\/?[^>]+(>|$)/g, "");
   }
 
   // Open a modal page to see more info about the album

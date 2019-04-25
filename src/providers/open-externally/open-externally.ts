@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
-import { SanitiseProvider } from '../sanitise/sanitise';
 import { ActionSheetController, AlertController } from 'ionic-angular';
 
 import { InAppBrowser } from '@ionic-native/in-app-browser';
@@ -12,7 +11,7 @@ import { AppAvailability } from '@ionic-native/app-availability';
 @Injectable()
 export class OpenExternallyProvider {
 
-  constructor(private http: HttpClient, private device: Device, private appAvailability: AppAvailability, private iab: InAppBrowser, private actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController, private sanitiseProvider: SanitiseProvider) {
+  constructor(private http: HttpClient, private device: Device, private appAvailability: AppAvailability, private iab: InAppBrowser, private actionSheetCtrl: ActionSheetController, private alertCtrl: AlertController) {
   }
 
   // Based on this answer from eivanov: https://forum.ionicframework.com/t/ionic-opening-external-app/77932/3
@@ -63,7 +62,7 @@ export class OpenExternallyProvider {
         {
           text: "Search Deezer",
           handler: () => {
-            let searchQuery: string = 'artist:"'+ this.sanitiseProvider.makeURLSafe(artist) +'"track:"'+ this.sanitiseProvider.makeURLSafe(track) +'"';
+            let searchQuery: string = 'artist:"'+ encodeURIComponent(artist) +'"track:"'+ encodeURIComponent(track) +'"';
             this.openInDeezer(searchQuery);
           }
         },{
@@ -103,11 +102,11 @@ export class OpenExternallyProvider {
   }
   
   private openInYouTube(searchQuery: string) {
-    this.launchExternalApp('youtube://', 'com.google.android.youtube', 'vnd.youtube:///results?search_query=', 'https://www.youtube.com/results?search_query=', this.sanitiseProvider.makeURLSafe(searchQuery));
+    this.launchExternalApp('youtube://', 'com.google.android.youtube', 'vnd.youtube:///results?search_query=', 'https://www.youtube.com/results?search_query=', encodeURIComponent(searchQuery));
   }
 
   private openInYouTubeMusic(searchQuery: string) {
-    this.launchExternalApp('youtube.music://', 'com.google.android.apps.youtube.music', 'vnd.youtube.music:///search?q=', 'https://music.youtube.com/search?q=', this.sanitiseProvider.makeURLSafe(searchQuery));
+    this.launchExternalApp('youtube.music://', 'com.google.android.apps.youtube.music', 'vnd.youtube.music:///search?q=', 'https://music.youtube.com/search?q=', encodeURIComponent(searchQuery));
   }
 
   private openInDeezer(searchQuery: string) {

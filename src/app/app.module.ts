@@ -20,7 +20,6 @@ import { SearchHistoryProvider } from '../providers/search-history/search-histor
 import { ChartsProvider } from '../providers/charts/charts';
 import { OpenExternallyProvider } from '../providers/open-externally/open-externally';
 import { AbbreviateNumbersProvider } from '../providers/abbreviate-numbers/abbreviate-numbers';
-import { SanitiseProvider } from '../providers/sanitise/sanitise';
 
 import { Globalization } from '@ionic-native/globalization';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
@@ -65,8 +64,7 @@ import { AppAvailability } from '@ionic-native/app-availability';
     Device,
     AppAvailability,
     OpenExternallyProvider,
-    AbbreviateNumbersProvider,
-    SanitiseProvider
+    AbbreviateNumbersProvider
   ]
 })
 export class AppModule {}
