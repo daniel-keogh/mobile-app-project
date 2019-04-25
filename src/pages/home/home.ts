@@ -15,7 +15,6 @@ export class HomePage {
 
   searchHistory: Set<string> = new Set;
   saveHistory: boolean;
-  searchQuery: string;
 
   constructor(public navCtrl: NavController, public storage: Storage, private searchHistoryProvider: SearchHistoryProvider, private actionSheetCtrl: ActionSheetController) {
   }
@@ -29,12 +28,6 @@ export class HomePage {
     });
   }
 
-  ionViewDidLeave() {
-    // Save the search to hisory after leaving the view
-    if (this.saveHistory && this.searchQuery != null)
-      this.searchHistoryProvider.addItemToHistory(this.searchQuery);
-  }
-
   viewSearchResults(userInput : string) {
     // only leave if the search bar isn't empty
     if (userInput != "") {
@@ -43,7 +36,9 @@ export class HomePage {
         saveHistory : this.saveHistory
       });
 
-      this.searchQuery = userInput;
+      // save the item to search history if the toggle is switched on
+      if (this.saveHistory)
+        this.searchHistoryProvider.addItemToHistory(userInput);
     }
   }
 
