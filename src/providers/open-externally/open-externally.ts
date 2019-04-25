@@ -121,6 +121,6 @@ export class OpenExternallyProvider {
   }
 
   private searchForDeezerTrack(searchQuery: string): Observable<any> {
-    return this.http.get('https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q='+ searchQuery +'.json');
+    return this.http.get('https://cors-anywhere.herokuapp.com/https://api.deezer.com/search?q='+ searchQuery);
   }
 }
