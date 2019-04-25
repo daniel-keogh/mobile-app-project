@@ -28,6 +28,12 @@ Several Ionic Native plugins are used to give the app more functionality:
 - [In App Browser](https://github.com/apache/cordova-plugin-inappbrowser)
 - [Globalisation](https://github.com/apache/cordova-plugin-globalization)
 
+# Screenshots
+<div display="inline">
+  <img src="https://user-images.githubusercontent.com/37158241/56760468-24659000-6793-11e9-98e3-442c9d137e6f.png" height="550" width="308" alt="iOS"/>
+  <img src="https://user-images.githubusercontent.com/37158241/56760474-2a5b7100-6793-11e9-890a-0bec741a91f0.png" height="550" width="308" hspace="20" alt="Android"/>
+</div>
+
 # Credits
 ## Icons
 Some of the icons used in the app were made by [SmashIcons](https://smashicons.com/) and obtained via www.flaticon.com.
