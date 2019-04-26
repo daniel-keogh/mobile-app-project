@@ -21,7 +21,7 @@ Chart information is retrieved using [Deezer's API](https://developers.deezer.co
 The top 100 songs from the 64 countries listed are displayed, depending on the user's locale. The app should automatically detect the user's locale and display the appropriate charts.
 
 # Ionic Native Plugins
-Several Ionic Native plugins are used to give the app more functionality:
+Several Ionic Native plugins are used to provide more functionality:
 
 - [App Availability](https://github.com/ohh2ahh/AppAvailability)
 - [Device](https://github.com/apache/cordova-plugin-device)
@@ -31,7 +31,7 @@ Several Ionic Native plugins are used to give the app more functionality:
 # Screenshots
 <div display="inline">
   <img src="https://user-images.githubusercontent.com/37158241/56760468-24659000-6793-11e9-98e3-442c9d137e6f.png" height="550" width="308" alt="iOS"/>
-  <img src="https://user-images.githubusercontent.com/37158241/56760474-2a5b7100-6793-11e9-890a-0bec741a91f0.png" height="550" width="308" hspace="20" alt="Android"/>
+  <img src="https://user-images.githubusercontent.com/37158241/56827767-a0291080-6857-11e9-8f67-b9a64104eabf.png" height="550" width="308" hspace="20" alt="Android"/>
 </div>
 
 # Credits
