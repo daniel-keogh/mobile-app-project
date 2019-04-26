@@ -37,6 +37,7 @@ export class ChartsProvider {
   }
 
   // Find the users locale using the globalisation plugin.
+  // The docs say this should work in a browser but it doesn't, but I can confirm it definitely does work when tested on an android device (only when installed as a .apk though).
   private getUsersLocale(): any {
     this.globalization.getLocaleName()
       .then(res => this.setUsersLocale(res.value))
