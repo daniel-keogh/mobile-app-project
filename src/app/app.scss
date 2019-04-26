@@ -15,6 +15,39 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+.action-sheet-md .action-sheet-selected {
+    color: #488aff;
+}
+
+.action-sheet-title {
+    border-bottom: 1px solid lightgray;
+}
+
+button label {
+    opacity: 0.5;
+}
+
+ion-card {
+    border-radius: 14px !important;
+}
+
+ion-card-title {
+    text-align: center;
+    margin-top: 5px !important;
+    margin-bottom: 10px !important;
+    border-bottom: 1px solid lightgray;
+}
+
 .view-artist ion-icon {
     margin-left: 5px;
+}
+
+.action-sheet-group .ion-md-nuclear {
+    color: #F1CD43;
+}
+.action-sheet-group .ion-md-trash {
+    color: #f53d3d;
+}
+.action-sheet-group .ion-md-search {
+    color: #488aff;
 }

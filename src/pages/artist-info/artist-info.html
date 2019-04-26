@@ -24,9 +24,8 @@
           </ion-col>
         </ion-row>
 
-        <br/><br/>
         <ion-item-group>
-          <ion-item-divider color="light">Top Albums</ion-item-divider>
+          <ion-item-divider>Top Albums</ion-item-divider>
             <ion-item text-wrap>
               <ion-slides pager>
                 <ion-slide *ngFor="let album of topAlbums">
@@ -37,28 +36,26 @@
                       <label>{{album.name}}</label>
                     </ion-card-content>
                   </ion-card>
-                  <br/>
+                  <br/><br/>
               </ion-slide>
             </ion-slides>
           </ion-item>
         </ion-item-group>
-        <br/><br/>
 
         <ion-item-group>
-            <ion-item-divider color="light">Top Tracks</ion-item-divider>
-            <button ion-item text-wrap *ngFor="let track of topTracks; let i = index" (click)="presentActionSheet(track.artist.name, track.name)">{{i + 1}}. {{track.name}}</button>
+            <ion-item-divider>Top Tracks</ion-item-divider>
+            <button ion-item text-wrap *ngFor="let track of topTracks; let i = index" (click)="presentActionSheet(track.artist.name, track.name)"><label>{{i + 1}}.</label> {{track.name}}</button>
         </ion-item-group>
     </div>
   
     <ion-grid *ngSwitchCase="'similar'">
       <ion-row justify-content-center>
         <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 *ngFor="let similarArtist of similarArtists">
-          <ion-card>
+          <ion-card class="similar-artist">
             <img src="{{similarArtist.image[4]['#text']}}" onerror="this.src='../../assets/imgs/placeholder.png'" height="300" width="300"/>
             <ion-card-content>
               <ion-card-title>{{similarArtist.name}}</ion-card-title>
-              <button ion-button icon-end block (click)="viewArtist(similarArtist.name)" class="view-artist">View<ion-icon name="arrow-forward"></ion-icon> 
-              </button>
+              <button ion-button icon-end block (click)="viewArtist(similarArtist.name)" class="view-artist">View<ion-icon name="arrow-forward"></ion-icon></button>
             </ion-card-content>
           </ion-card>
         </ion-col>

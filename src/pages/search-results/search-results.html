@@ -21,12 +21,10 @@
               <img src="{{artist.image[4]['#text']}}" onerror="this.src='../../assets/imgs/placeholder.png'" height="300" width="300"/>
               <ion-card-content>
                 <ion-card-title>{{artist.name}}</ion-card-title>
-                <hr/>
                 <ion-item>
                   <p item-start><ion-icon name="headset" item-start></ion-icon> Listeners </p>
                   <ion-badge color="secondary" value="listeners" item-end>{{abbreviateNumListeners(artist.listeners)}}</ion-badge>
                 </ion-item>
-                <br/>
                 <button ion-button icon-end block (click)="viewArtist(artist.name)" class="view-artist">View<ion-icon name="arrow-forward"></ion-icon> 
                 </button>
               </ion-card-content>

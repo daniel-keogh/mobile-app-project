@@ -9,4 +9,20 @@ page-artist-info {
     #bio {
         user-select: text !important;
     }
+
+    ion-item-group {
+        margin-top: 25px;
+    }
+
+    ion-segment {
+        margin-bottom: 25px;
+    }
+    
+    .swiper-pagination-bullet-active {
+        background: #32db64;
+    }
+
+    .similar-artist ion-card-content ion-card-title {
+        margin-bottom: 15px !important;
+    }
 }

@@ -29,7 +29,7 @@
   <br/>
   
   <ion-item-group>
-      <ion-item-divider color="light">Track Listing</ion-item-divider>
-      <button ion-item text-wrap *ngFor="let track of tracklist; let i = index" (click)="presentActionSheet(track.artist.name, track.name)">{{i + 1}}. {{track.name}}</button>
+      <ion-item-divider>Track Listing</ion-item-divider>
+      <button ion-item text-wrap *ngFor="let track of tracklist; let i = index" (click)="presentActionSheet(track.artist.name, track.name)"><label>{{i + 1}}.</label> {{track.name}}</button>
   </ion-item-group>
 </ion-content>
