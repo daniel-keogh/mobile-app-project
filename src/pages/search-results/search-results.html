@@ -18,7 +18,7 @@
     <ion-row justify-content-center>
         <ion-col col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3 *ngFor="let artist of artists">
           <ion-card>
-              <img src="{{artist.image[4]['#text']}}" onerror="this.src='../../assets/imgs/placeholder.png'" height="300" width="300"/>
+              <img src="{{artist.image[4]['#text']}}" onerror="this.src='../../assets/imgs/placeholder.svg'" height="300" width="300"/>
               <ion-card-content>
                 <ion-card-title>{{artist.name}}</ion-card-title>
                 <ion-item>
