@@ -34,9 +34,5 @@ Several Ionic Native plugins are used to provide more functionality:
   <img src="https://user-images.githubusercontent.com/37158241/56827767-a0291080-6857-11e9-8f67-b9a64104eabf.png" height="550" width="308" hspace="20" alt="Android"/>
 </div>
 
-# Credits
-## Icons
-Some of the icons used in the app were made by [SmashIcons](https://smashicons.com/) and obtained via www.flaticon.com.
-
 # License
 GPL v.3
